@@ -9,6 +9,7 @@ static const char *fonts[]          = {
 
 	"monospace:size=10", 
 	"Font Awesome 5 Free Solid:size=13",
+	"Font Awesome 5 Brands:size=13"
 };
 
 static const char dmenufont[]       = "monospace:size=10";
