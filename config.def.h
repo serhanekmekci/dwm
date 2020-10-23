@@ -14,10 +14,10 @@ static const char *fonts[]          = {
 
 static const char dmenufont[]       = "Fira Code:size=12:antialias=true:autohint=true";
 static const char col_gray1[]       = "#000000";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_gray2[]       = "#000000";
+static const char col_gray3[]       = "#000000";
+static const char col_gray4[]       = "#000000";
+static const char col_cyan[]        = "#bababa";
 static const char dmenu_lh[]        = "26";
 static const char dmenu_lnm[]       = "10";
 static const char *colors[][3]      = {
