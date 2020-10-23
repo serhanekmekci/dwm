@@ -22,14 +22,10 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
-const char *spcmd3[] = {"keepassxc", NULL };
+const char *sp1[] = {"st", "-n", "sp1", "-g", "120x34", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
-	{"spterm",      spcmd1},
-	{"spranger",    spcmd2},
-	{"keepassxc",   spcmd3},
+	{"sp1",      sp1},
 };
 
 /* tagging */
@@ -101,9 +97,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY,            			XK_u,	   togglescratch,  {.ui = 1 } },
-	{ MODKEY,            			XK_x,	   togglescratch,  {.ui = 2 } },
+	{ MODKEY,            			XK_u,  	   togglescratch,  {.ui = 0 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
