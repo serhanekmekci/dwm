@@ -15,7 +15,7 @@ static const char *fonts[]          = {
 static const char dmenufont[]       = "Fira Code:size=12:antialias=true:autohint=true";
 static const char col_gray1[]       = "#000000";
 static const char col_gray2[]       = "#000000";
-static const char col_gray3[]       = "#000000";
+static const char col_gray3[]       = "#ababab";
 static const char col_gray4[]       = "#000000";
 static const char col_cyan[]        = "#bababa";
 static const char dmenu_lh[]        = "26";
