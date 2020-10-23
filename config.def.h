@@ -7,9 +7,9 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 0;        /* 0 means bottom bar */
 static const char *fonts[]          = { 
 
-	"monospace:size=10", 
-	"Font Awesome 5 Free Solid:size=13",
-	"Font Awesome 5 Brands:size=13"
+	"Fira Code:size=10:antialias=true:autohint=true", 
+	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
+	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true"
 };
 
 static const char dmenufont[]       = "monospace:size=10";
