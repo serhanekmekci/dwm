@@ -23,9 +23,11 @@ typedef struct {
 	const void *cmd;
 } Sp;
 const char *sp1[] = {"st", "-n", "sp1", "-g", "120x34", NULL };
+const char *sp2[] = {"st", "-n", "sp2", "-g", "120x34", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"sp1",      sp1},
+	{"sp2",      sp2},
 };
 
 /* tagging */
@@ -37,6 +39,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ NULL,		  "sp1",		NULL,		SPTAG(0),		1,			 -1 },
+	{ NULL,		  "sp2",		NULL,		SPTAG(1),		1,			 -1 },
 };
 
 /* layout(s) */
@@ -94,6 +97,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,            			XK_u,  	   togglescratch,  {.ui = 0 } },
+	{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
