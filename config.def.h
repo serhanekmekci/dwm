@@ -6,10 +6,9 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = {
-
-	"Iosevka:size=10:antialias=true:autohint=true:style=Regular",
 	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
-	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true"
+	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
+	"Iosevka:size=10:antialias=true:autohint=true:style=Regular",
 };
 
 static const char dmenufont[]       = "Input:size=12:antialias=true:autohint=true:style=Regular";
