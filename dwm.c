@@ -250,7 +250,7 @@ static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 static void load_xresources(void);
 static void resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst);
-static void resource_load(const Arg *arg)
+static void livereloadxres(const Arg *arg);
 
 /* variables */
 static const char broken[] = "broken";
