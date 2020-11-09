@@ -35,7 +35,20 @@ static const unsigned int alphas[][3]      = {
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
+typedef struct {
+	const char *name;
+	const void *cmd;
+} Sp;
+const char *sp1[] = {"st", "-n", "sp1", "-g", "120x34", NULL };
+const char *sp2[] = {"st", "-n", "sp2", "-g", "120x34", NULL };
+static Sp scratchpads[] = {
+	/* name          cmd  */
+	{"sp1",      sp1},
+	{"sp2",      sp2},
+};
+
 /* tagging */
+<<<<<<< HEAD
 static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
 static const Rule rules[] = {
@@ -44,8 +57,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ NULL,		  "sp1",		NULL,		SPTAG(0),		1,			 -1 },
+	{ NULL,		  "sp2",		NULL,		SPTAG(1),		1,			 -1 },
 };
 
 /* layout(s) */
@@ -100,6 +113,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-h", dmenu_lh, "-c", "-l", dmenu_lnm, topbar ? NULL : "-b", NULL };
 static const char *termcmd[]  = { "st", NULL };
 
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -145,6 +159,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_g,      setgaps,        {.i = +5 } },
 	{ MODKEY|ShiftMask,             XK_v,      setgaps,        {.i = GAP_RESET } },
 	{ MODKEY|ShiftMask,             XK_g,      setgaps,        {.i = GAP_TOGGLE} },
+	{ MODKEY,            			XK_u,  	   togglescratch,  {.ui = 0 } },
+	{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -166,7 +182,7 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button1,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
