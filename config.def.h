@@ -12,10 +12,10 @@ static const unsigned int borderalpha = OPAQUE;
 static char *fonts[]          = {
 	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
 	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
-	"Iosevka:size=10:antialias=true:autohint=true:style=Regular",
+	"Fira Code:size=10:antialias=true:autohint=true:style=Regular",
 };
 
-static const char dmenufont[]       = "Input:size=12:antialias=true:autohint=true:style=Regular";
+static const char dmenufont[]       = "Fira Code:size=12:antialias=true:autohint=true:style=Regular";
 static char normbgcolor[]           = "#000000";
 static char normbordercolor[]       = "#000000";
 static char normfgcolor[]           = "#ababab";
@@ -59,7 +59,6 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-<<<<<<< HEAD
 static float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static int nmaster     = 1;    /* number of clients in master area */
 static int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
@@ -124,11 +123,9 @@ ResourcePref resources[] = {
 		{ "borderpx",          	INTEGER, &borderpx },
 		{ "snap",          		INTEGER, &snap },
 		{ "showbar",          	INTEGER, &showbar },
-		{ "topbar",          	INTEGER, &topbar },
 		{ "nmaster",          	INTEGER, &nmaster },
 		{ "resizehints",       	INTEGER, &resizehints },
 		{ "mfact",      	 	FLOAT,   &mfact },
-		{ "alpha",      	 	FLOAT,   &alpha },
 };
 
 static Key keys[] = {
