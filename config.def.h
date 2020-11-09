@@ -22,6 +22,8 @@ static char normfgcolor[]           = "#ababab";
 static char selfgcolor[]            = "#000000";
 static char selbordercolor[]        = "#bababa";
 static char selbgcolor[]            = "#ababab";
+static const char dmenu_lh[]        = "26";
+static const char dmenu_lnm[]       = "10";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -277,4 +279,5 @@ static Signal signals[] = {
 	{ "quit",           quit },
 	{ "setlayout",      setlayout },
 	{ "setlayoutex",    setlayoutex },
+	{ "livereloadxres", livereloadxres },
 };
