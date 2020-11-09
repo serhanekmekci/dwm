@@ -6,15 +6,22 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 26;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
 static const unsigned int baralpha = 0xb0;
 static const unsigned int borderalpha = OPAQUE;
+static const char *fonts[]          = {
+	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
+	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
+	"Iosevka:size=10:antialias=true:autohint=true:style=Regular",
+};
+
+static const char dmenufont[]       = "Input:size=12:antialias=true:autohint=true:style=Regular";
+static const char col_gray1[]       = "#000000";
+static const char col_gray2[]       = "#000000";
+static const char col_gray3[]       = "#ababab";
+static const char col_gray4[]       = "#000000";
+static const char col_cyan[]        = "#bababa";
+static const char dmenu_lh[]        = "26";
+static const char dmenu_lnm[]       = "10";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -27,7 +34,7 @@ static const unsigned int alphas[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -47,25 +54,25 @@ static const int attachdirection = 3;    /* 0 default, 1 above, 2 aside, 3 below
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "",      tile },    /* first entry is default */
+	{ "",      NULL },    /* no layout function means floating behavior */
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
+	{ Mod1Mask|ShiftMask,           KEY,      swaptags,       {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-h", dmenu_lh, "-c", "-l", dmenu_lnm, topbar ? NULL : "-b", NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
@@ -82,9 +89,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_x,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -93,6 +99,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -122,3 +129,24 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 
+void
+swaptags(const Arg *arg)
+{
+	unsigned int newtag = arg->ui & TAGMASK;
+	unsigned int curtag = selmon->tagset[selmon->seltags];
+
+	if (newtag == curtag || !curtag || (curtag & (curtag-1)))
+		return;
+
+	for (Client *c = selmon->clients; c != NULL; c = c->next) {
+		if((c->tags & newtag) || (c->tags & curtag))
+			c->tags ^= curtag ^ newtag;
+
+		if(!c->tags) c->tags = newtag;
+	}
+
+	selmon->tagset[selmon->seltags] = newtag;
+
+	focus(NULL);
+	arrange(selmon);
+}
