@@ -2,7 +2,9 @@
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const Gap default_gap        = {.isgap = 1, .realgap = 0, .gappx = 30};
 static const unsigned int snap      = 32;       /* snap pixel */
+<<<<<<< HEAD
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 26;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
@@ -123,6 +125,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
+	{ MODKEY,                       XK_v,      setgaps,        {.i = -5 } },
+	{ MODKEY,                       XK_g,      setgaps,        {.i = +5 } },
+	{ MODKEY|ShiftMask,             XK_v,      setgaps,        {.i = GAP_RESET } },
+	{ MODKEY|ShiftMask,             XK_g,      setgaps,        {.i = GAP_TOGGLE} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
