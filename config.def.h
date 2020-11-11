@@ -7,8 +7,9 @@ static unsigned int snap      = 32;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 26;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const unsigned int baralpha = 0xb0;
+static const unsigned int baralpha = 0xa0;
 static const unsigned int borderalpha = OPAQUE;
+static const unsigned int fgalpha = OPAQUE;
 static char *fonts[]          = {
 	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
 	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
@@ -31,8 +32,8 @@ static char *colors[][3] = {
 };
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
-	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeNorm] = { fgalpha, baralpha, borderalpha },
+	[SchemeSel]  = { fgalpha, baralpha, borderalpha },
 };
 
 typedef struct {
@@ -126,6 +127,9 @@ ResourcePref resources[] = {
 		{ "snap",          		INTEGER, &snap },
 		{ "showbar",          	INTEGER, &showbar },
 		{ "nmaster",          	INTEGER, &nmaster },
+		//{ "baralpha",          	INTEGER, &baralpha },
+		//{ "fgalpha",          	INTEGER, &fgalpha },
+		//{ "borderalpha",       	INTEGER, &borderalpha },
 		{ "resizehints",       	INTEGER, &resizehints },
 		{ "mfact",      	 	FLOAT,   &mfact },
 };
@@ -279,5 +283,5 @@ static Signal signals[] = {
 	{ "quit",           quit },
 	{ "setlayout",      setlayout },
 	{ "setlayoutex",    setlayoutex },
-	{ "livereloadxres", livereloadxres },
+	{ "reload",			livereloadxres },
 };
