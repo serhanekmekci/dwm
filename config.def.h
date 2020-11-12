@@ -5,7 +5,7 @@ static unsigned int borderpx  = 1;        /* border pixel of windows */
 static const Gap default_gap        = {.isgap = 1, .realgap = 0, .gappx = 30};
 static unsigned int snap      = 32;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
+static int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 26;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const unsigned int baralpha = 0xa0;
 static const unsigned int borderalpha = OPAQUE;
@@ -23,8 +23,8 @@ static char normfgcolor[]           = "#ababab";
 static char selfgcolor[]            = "#000000";
 static char selbordercolor[]        = "#bababa";
 static char selbgcolor[]            = "#ababab";
-static const char dmenu_lh[]        = "26";
-static const char dmenu_lnm[]       = "10";
+static char dmenu_lh[]        = "26";
+static char dmenu_lnm[]       = "10";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -110,7 +110,7 @@ swaptags(const Arg *arg)
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, "-h", dmenu_lh, "-c", "-l", dmenu_lnm, topbar ? NULL : "-b", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, "-h", dmenu_lh, "-c", "-l", dmenu_lnm, "-b", NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 /*
@@ -125,11 +125,12 @@ ResourcePref resources[] = {
 		{ "selfgcolor",         STRING,  &selfgcolor },
 		{ "borderpx",          	INTEGER, &borderpx },
 		{ "snap",          		INTEGER, &snap },
+		{ "topbar",				INTEGER, &topbar },
 		{ "showbar",          	INTEGER, &showbar },
 		{ "nmaster",          	INTEGER, &nmaster },
-		//{ "baralpha",          	INTEGER, &baralpha },
-		//{ "fgalpha",          	INTEGER, &fgalpha },
-		//{ "borderalpha",       	INTEGER, &borderalpha },
+	  //{ "baralpha",          	INTEGER, &baralpha },
+	  //{ "fgalpha",          	INTEGER, &fgalpha },
+	  //{ "borderalpha",       	INTEGER, &borderalpha },
 		{ "resizehints",       	INTEGER, &resizehints },
 		{ "mfact",      	 	FLOAT,   &mfact },
 };

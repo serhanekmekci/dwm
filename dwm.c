@@ -2847,7 +2847,6 @@ livereloadxres(const Arg *arg)
 	int i;
     for (i = 0; i < LENGTH(colors); i++)
 		scheme[i] = drw_scm_create(drw, colors[i], alphas[i], 3);
-
     focus(NULL);
     arrange(NULL);
 }
