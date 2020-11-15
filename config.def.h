@@ -111,7 +111,7 @@ swaptags(const Arg *arg)
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, "-h", dmenu_lh, "-c", "-l", dmenu_lnm, "-b", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "tabbedst", NULL };
 
 /*
  * Xresources preferences to load at startup
