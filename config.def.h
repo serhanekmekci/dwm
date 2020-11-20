@@ -1,7 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-<<<<<<< HEAD
 static unsigned int borderpx  = 1;        /* border pixel of windows */
 static const Gap default_gap        = {.isgap = 1, .realgap = 0, .gappx = 30};
 static unsigned int snap      = 32;       /* snap pixel */
@@ -16,6 +15,7 @@ static char *fonts[]          = {
 	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
 	"Fira Code:size=10:antialias=true:autohint=true:style=Regular",
 };
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 
 static const char dmenufont[]       = "Fira Code:size=12:antialias=true:autohint=true:style=Regular";
 static char normbgcolor[]           = "#000000";
@@ -61,6 +61,7 @@ static const Rule rules[] = {
 	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
 	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ "tabbed",  NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
