@@ -60,9 +60,9 @@ static const Rule rules[] = {
 	/* class      instance       title           tags mask	isfloating  iscentered  isterminal   noswallow monitor */
 	{ "St",       NULL,          NULL,           0,			0,			0,          1,           0,        -1 },
 	{ "tabbed",   NULL,          NULL,           0,			0,			0,          1,           0,        -1 },
-	{ NULL,       NULL,          "Event Tester", 0,         1,			1,          0,           1,        -1 }, /* xev */
-	{ NULL,		  "sp1",		 NULL,		     SPTAG(0),  1,			1,			-1,          1,        -1 },
-	{ NULL,		  "sp2",		 NULL,		     SPTAG(1),	1,			1,			-1,          1,        -1 },
+	{ NULL,       NULL,          "Event Tester", 0,         1,			1,          0,           0,        -1 }, /* xev */
+	{ NULL,		  "sp1",		 NULL,		     SPTAG(0),  1,			1,			-1,          0,        -1 },
+	{ NULL,		  "sp2",		 NULL,		     SPTAG(1),	1,			1,			-1,          0,        -1 },
 	{ NULL,		  "translate",   NULL,		     0,			1,			1,			-1,          1,        -1 },
 
 };
