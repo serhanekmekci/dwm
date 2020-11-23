@@ -175,8 +175,8 @@ typedef struct {
 	const char *title;
 	unsigned int tags;
 	int isfloating;
-	int isterminal;
 	int noswallow;
+	int isterminal;
 	int iscentered;
 	int monitor;
 } Rule;
@@ -396,11 +396,11 @@ applyrules(Client *c)
 		&& (!r->class || strstr(class, r->class))
 		&& (!r->instance || strstr(instance, r->instance)))
 		{
-			c->isterminal = r->isterminal;
-			c->noswallow  = r->noswallow;
-			c->iscentered = r->iscentered;
-			c->isfloating = r->isfloating;
 			c->tags |= r->tags;
+			c->isfloating = r->isfloating;
+			c->noswallow  = r->noswallow;
+			c->isterminal = r->isterminal;
+			c->iscentered = r->iscentered;
 			if ((r->tags & SPTAGMASK) && r->isfloating) {
 				c->x = c->mon->wx + (c->mon->ww / 2 - WIDTH(c) / 2);
 				c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
