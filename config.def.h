@@ -221,5 +221,5 @@ static Signal signals[] = {
 	{ "quit",           quit },
 	{ "setlayout",      setlayout },
 	{ "setlayoutex",    setlayoutex },
-	{ "reload",			livereloadxres },
+	{ "reload",	    livereloadxres },
 };
