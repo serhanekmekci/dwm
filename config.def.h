@@ -1,17 +1,17 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static unsigned int borderpx  = 1;        /* border pixel of windows */
+static unsigned int borderpx  = 2;        /* border pixel of windows */
 static const Gap default_gap        = {.isgap = 1, .realgap = 1, .gappx = 25};
 static unsigned int snap      = 20;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
-static int topbar             = 0;        /* 0 means bottom bar */
+static int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 26;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const unsigned int baralpha = 0x64;
-static const unsigned int borderalpha = OPAQUE;
-static const unsigned int fgalpha = OPAQUE;
-static const int vertpad            = 20;       /* vertical padding of bar */
-static const int sidepad            = 120;       /* horizontal padding of bar */
+static const unsigned int borderalpha = 0x64;
+static const unsigned int fgalpha = 0x64;
+static const int vertpad            = 10;       /* vertical padding of bar */
+static const int sidepad            = 130;       /* horizontal padding of bar */
 static char *fonts[]          = {
 	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
 	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
