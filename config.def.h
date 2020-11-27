@@ -8,16 +8,14 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = {
 	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
 	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
-	"Iosevka:size=10:antialias=true:autohint=true:style=Regular",
+	"Fira Code:size=10:antialias=true:autohint=true:style=Regular",
 };
 
-static const char dmenufont[]       = "Input:size=12:antialias=true:autohint=true:style=Regular";
 static const char col_gray1[]       = "#000000";
 static const char col_gray2[]       = "#000000";
-static const char col_gray3[]       = "#ababab";
+static const char col_gray3[]       = "#ffffff";
 static const char col_gray4[]       = "#000000";
-static const char col_cyan[]        = "#bababa";
-static const char dmenu_lh[]        = "26";
+static const char col_cyan[]        = "#ffffff";
 static const char dmenu_lnm[]       = "10";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -34,8 +32,6 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
@@ -63,7 +59,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-h", dmenu_lh, "-c", "-l", dmenu_lnm, topbar ? NULL : "-b", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-c", "-l", dmenu_lnm, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
@@ -119,25 +115,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
-void
-swaptags(const Arg *arg)
-{
-	unsigned int newtag = arg->ui & TAGMASK;
-	unsigned int curtag = selmon->tagset[selmon->seltags];
-
-	if (newtag == curtag || !curtag || (curtag & (curtag-1)))
-		return;
-
-	for (Client *c = selmon->clients; c != NULL; c = c->next) {
-		if((c->tags & newtag) || (c->tags & curtag))
-			c->tags ^= curtag ^ newtag;
-
-		if(!c->tags) c->tags = newtag;
-	}
-
-	selmon->tagset[selmon->seltags] = newtag;
-
-	focus(NULL);
-	arrange(selmon);
-}
