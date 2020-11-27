@@ -10,6 +10,8 @@ static const int user_bh            = 26;        /* 0 means that dwm will calcul
 static const unsigned int baralpha = 0x64;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int fgalpha = OPAQUE;
+static const int vertpad            = 10;       /* vertical padding of bar */
+static const int sidepad            = 50;       /* horizontal padding of bar */
 static char *fonts[]          = {
 	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
 	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
