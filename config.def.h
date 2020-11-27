@@ -17,14 +17,12 @@ static char *fonts[]          = {
 };
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 
-static const char dmenufont[]       = "Fira Code:size=12:antialias=true:autohint=true:style=Regular";
 static char normbgcolor[]           = "#000000";
 static char normbordercolor[]       = "#000000";
 static char normfgcolor[]           = "#ffffff";
 static char selfgcolor[]            = "#000000";
 static char selbordercolor[]        = "#ffffff";
 static char selbgcolor[]            = "#ffffff";
-static char dmenu_lh[]        = "26";
 static char dmenu_lnm[]       = "10";
 static char *colors[][3] = {
        /*               fg           bg           border   */
@@ -94,7 +92,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-F", "-m", dmenumon, "-fn", dmenufont, "-h", dmenu_lh, "-c", "-l", dmenu_lnm, "-b", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-F", "-m", dmenumon, "-c", "-l", dmenu_lnm, "-b", NULL };
 static const char *termcmd[]  = { "tabbedst", NULL };
 
 /*
