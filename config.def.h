@@ -57,13 +57,13 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance       title           tags mask	isfloating  noswallow   isterminal   iscentered monitor */
-	{ "St",       NULL,          NULL,           0,			0,			0,          1,           1,         -1 },
-	{ "tabbed",	  NULL,          NULL,           0,			0,			0,          1,           1,         -1 },
-	{ NULL,		  NULL,          "Event Tester", 0,         1,			1,          0,           1,         -1 }, /* xev */
-	{ NULL,		  "sp1",		 NULL,		     SPTAG(0),  1,			0,			-1,          1,         -1 },
-	{ NULL,		  "sp2",		 NULL,		     SPTAG(1),	1,			0,			-1,          1,         -1 },
-	{ NULL,		  "translate",   NULL,		     0,			1,			1,			-1,          1,         -1 },
+	/* class		instance		title				tags mask	isfloating	noswallow   isterminal   iscentered monitor */
+	{ "St",			NULL,			NULL,				0,			0,			0,          1,           1,         -1 },
+	{ "tabbed",		NULL,			NULL,				0,			0,			0,			1,           1,         -1 },
+	{ NULL,			NULL,			"Event Tester",		0,			1,			1,			0,           1,         -1 }, /* xev */
+	{ NULL,			"sp1",			NULL,				SPTAG(0),	1,			0,			-1,          1,         -1 },
+	{ NULL,			"sp2",			NULL,				SPTAG(1),	1,			0,			-1,          1,         -1 },
+	{ NULL,			"translate",	NULL,				0,			1,			1,			-1,          1,         -1 },
 
 };
 
