@@ -80,6 +80,8 @@ static const Layout layouts[] = {
 	{ "",      NULL },    /* no layout function means floating behavior */
 };
 
+#include "swaptags.c"
+
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \

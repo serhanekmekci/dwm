@@ -282,7 +282,6 @@ static void togglefloating(const Arg *arg);
 static void togglefullscr(const Arg *arg);
 static void togglescratch(const Arg *arg);
 static void toggletag(const Arg *arg);
-static void swaptags(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
 static void unmanage(Client *c, int destroyed);
@@ -2340,28 +2339,6 @@ toggletag(const Arg *arg)
 		focus(NULL);
 		arrange(selmon);
 	}
-}
-
-void
-swaptags(const Arg *arg)
-{
-	unsigned int newtag = arg->ui & TAGMASK;
-	unsigned int curtag = selmon->tagset[selmon->seltags];
-
-	if (newtag == curtag || !curtag || (curtag & (curtag-1)))
-		return;
-
-	for (Client *c = selmon->clients; c != NULL; c = c->next) {
-		if((c->tags & newtag) || (c->tags & curtag))
-			c->tags ^= curtag ^ newtag;
-
-		if(!c->tags) c->tags = newtag;
-	}
-
-	selmon->tagset[selmon->seltags] = newtag;
-
-	focus(NULL);
-	arrange(selmon);
 }
 
 void
