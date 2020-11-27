@@ -266,6 +266,7 @@ static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
 static void setgaps(const Arg *arg);
 static void setlayout(const Arg *arg);
+static void setlayoutex(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
@@ -274,6 +275,8 @@ static void sigchld(int unused);
 static void sigdwmblocks(const Arg *arg);
 static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
+static void tagex(const Arg *arg);
+static void tagall(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *);
 static void togglebar(const Arg *arg);
@@ -281,7 +284,10 @@ static void togglefloating(const Arg *arg);
 static void togglefullscr(const Arg *arg);
 static void togglescratch(const Arg *arg);
 static void toggletag(const Arg *arg);
+static void toggletagex(const Arg *arg);
+static void swaptags(const Arg *arg);
 static void toggleview(const Arg *arg);
+static void toggleviewex(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
 static void unmanage(Client *c, int destroyed);
 static void unmapnotify(XEvent *e);
@@ -297,6 +303,8 @@ static void updatetitle(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
 static void view(const Arg *arg);
+static void viewex(const Arg *arg);
+static void viewall(const Arg *arg);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
 static int xerror(Display *dpy, XErrorEvent *ee);
@@ -2053,6 +2061,12 @@ setlayout(const Arg *arg)
 		drawbar(selmon);
 }
 
+void
+setlayoutex(const Arg *arg)
+{
+	setlayout(&((Arg) { .v = &layouts[arg->i] }));
+}
+
 /* arg > 1.0 will set mfact absolutely */
 void
 setmfact(const Arg *arg)
@@ -2228,6 +2242,18 @@ tag(const Arg *arg)
 }
 
 void
+tagex(const Arg *arg)
+{
+	tag(&((Arg) { .ui = 1 << arg->ui }));
+}
+
+void
+tagall(const Arg *arg)
+{
+	tag(&((Arg){.ui = ~0}));
+}
+
+void
 tagmon(const Arg *arg)
 {
 	if (!selmon->sel || !mons->next)
@@ -2335,6 +2361,34 @@ toggletag(const Arg *arg)
 }
 
 void
+toggletagex(const Arg *arg)
+{
+	toggletag(&((Arg) { .ui = 1 << arg->ui }));
+}
+
+void
+swaptags(const Arg *arg)
+{
+	unsigned int newtag = arg->ui & TAGMASK;
+	unsigned int curtag = selmon->tagset[selmon->seltags];
+
+	if (newtag == curtag || !curtag || (curtag & (curtag-1)))
+		return;
+
+	for (Client *c = selmon->clients; c != NULL; c = c->next) {
+		if((c->tags & newtag) || (c->tags & curtag))
+			c->tags ^= curtag ^ newtag;
+
+		if(!c->tags) c->tags = newtag;
+	}
+
+	selmon->tagset[selmon->seltags] = newtag;
+
+	focus(NULL);
+	arrange(selmon);
+}
+
+void
 toggleview(const Arg *arg)
 {
 	unsigned int newtagset = selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);
@@ -2368,6 +2422,12 @@ toggleview(const Arg *arg)
 		focus(NULL);
 		arrange(selmon);
 	}
+}
+
+void
+toggleviewex(const Arg *arg)
+{
+	toggleview(&((Arg) { .ui = 1 << arg->ui }));
 }
 
 void
@@ -2765,6 +2825,18 @@ view(const Arg *arg)
 
 	focus(NULL);
 	arrange(selmon);
+}
+
+void
+viewex(const Arg *arg)
+{
+	view(&((Arg) { .ui = 1 << arg->ui }));
+}
+
+void
+viewall(const Arg *arg)
+{
+	view(&((Arg){.ui = ~0}));
 }
 
 pid_t

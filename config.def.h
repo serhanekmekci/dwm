@@ -20,10 +20,10 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static const char dmenufont[]       = "Fira Code:size=12:antialias=true:autohint=true:style=Regular";
 static char normbgcolor[]           = "#000000";
 static char normbordercolor[]       = "#000000";
-static char normfgcolor[]           = "#ababab";
+static char normfgcolor[]           = "#ffffff";
 static char selfgcolor[]            = "#000000";
-static char selbordercolor[]        = "#bababa";
-static char selbgcolor[]            = "#ababab";
+static char selbordercolor[]        = "#ffffff";
+static char selbgcolor[]            = "#ffffff";
 static char dmenu_lh[]        = "26";
 static char dmenu_lnm[]       = "10";
 static char *colors[][3] = {
@@ -60,10 +60,10 @@ static const Rule rules[] = {
 	/* class		instance		title				tags mask	isfloating	noswallow   isterminal  iscentered monitor */
 	{ "St",			NULL,			NULL,				0,			0,			0,			1,			1,			-1 },
 	{ "tabbed",		NULL,			NULL,				0,			0,			0,			1,			1,			-1 },
-	{ NULL,			NULL,			"Event Tester",			0,			1,			1,			0,			1,			-1 }, /* xev */
+	{ NULL,			NULL,			"Event Tester",		0,			1,			1,			0,			1,			-1 }, /* xev */
 	{ NULL,			"sp1",			NULL,				SPTAG(0),	1,			0,			-1,			1,			-1 },
 	{ NULL,			"sp2",			NULL,				SPTAG(1),	1,			0,			-1,			1,			-1 },
-	{ NULL,			"translate",	NULL,					0,			1,			1,			-1,			1,			-1 },
+	{ NULL,			"translate",	NULL,				0,			1,			1,			-1,			1,			-1 },
 
 };
 
@@ -79,28 +79,6 @@ static const Layout layouts[] = {
 	{ "",      tile },    /* first entry is default */
 	{ "",      NULL },    /* no layout function means floating behavior */
 };
-
-void
-swaptags(const Arg *arg)
-{
-	unsigned int newtag = arg->ui & TAGMASK;
-	unsigned int curtag = selmon->tagset[selmon->seltags];
-
-	if (newtag == curtag || !curtag || (curtag & (curtag-1)))
-		return;
-
-	for (Client *c = selmon->clients; c != NULL; c = c->next) {
-		if((c->tags & newtag) || (c->tags & curtag))
-			c->tags ^= curtag ^ newtag;
-
-		if(!c->tags) c->tags = newtag;
-	}
-
-	selmon->tagset[selmon->seltags] = newtag;
-
-	focus(NULL);
-	arrange(selmon);
-}
 
 /* key definitions */
 #define MODKEY Mod4Mask
@@ -134,9 +112,6 @@ ResourcePref resources[] = {
 		{ "topbar",				INTEGER, &topbar },
 		{ "showbar",          	INTEGER, &showbar },
 		{ "nmaster",          	INTEGER, &nmaster },
-	  //{ "baralpha",          	INTEGER, &baralpha },
-	  //{ "fgalpha",          	INTEGER, &fgalpha },
-	  //{ "borderalpha",       	INTEGER, &borderalpha },
 		{ "resizehints",       	INTEGER, &resizehints },
 		{ "mfact",      	 	FLOAT,   &mfact },
 };
@@ -220,48 +195,6 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
-void
-setlayoutex(const Arg *arg)
-{
-	setlayout(&((Arg) { .v = &layouts[arg->i] }));
-}
-
-void
-viewex(const Arg *arg)
-{
-	view(&((Arg) { .ui = 1 << arg->ui }));
-}
-
-void
-viewall(const Arg *arg)
-{
-	view(&((Arg){.ui = ~0}));
-}
-
-void
-toggleviewex(const Arg *arg)
-{
-	toggleview(&((Arg) { .ui = 1 << arg->ui }));
-}
-
-void
-tagex(const Arg *arg)
-{
-	tag(&((Arg) { .ui = 1 << arg->ui }));
-}
-
-void
-toggletagex(const Arg *arg)
-{
-	toggletag(&((Arg) { .ui = 1 << arg->ui }));
-}
-
-void
-tagall(const Arg *arg)
-{
-	tag(&((Arg){.ui = ~0}));
-}
 
 /* signal definitions */
 /* signum must be greater than 0 */
