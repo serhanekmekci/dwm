@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static unsigned int borderpx  = 2;        /* border pixel of windows */
+static unsigned int borderpx  = 4;        /* border pixel of windows */
 static const Gap default_gap        = {.isgap = 1, .realgap = 25, .gappx = 25};
 static unsigned int snap      = 20;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
