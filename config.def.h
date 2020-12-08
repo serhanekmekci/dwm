@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static unsigned int borderpx  = 4;        /* border pixel of windows */
+static unsigned int borderpx  = 3;        /* border pixel of windows */
 static const Gap default_gap        = {.isgap = 1, .realgap = 25, .gappx = 25};
 static unsigned int snap      = 20;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
@@ -10,12 +10,12 @@ static const int user_bh            = 30;        /* 0 means that dwm will calcul
 static const unsigned int baralpha = 0x64;
 static const unsigned int borderalpha = 0x64;
 static const unsigned int fgalpha = 0x64;
-static const int vertpad            = 10;       /* vertical padding of bar */
-static const int sidepad            = 120;       /* horizontal padding of bar */
+static const int vertpad            = 20;       /* vertical padding of bar */
+static const int sidepad            = 25;       /* horizontal padding of bar */
 static char *fonts[]          = {
-	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
-	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
-	"Fira Code:size=10:antialias=true:autohint=true:style=Regular",
+	"Font Awesome 5 Free Solid:size=14:antialias=true:autohint=true",
+	"Font Awesome 5 Brands:size=14:antialias=true:autohint=true",
+	"Fira Code:size=9:antialias=true:autohint=true:style=Regular",
 };
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 
@@ -79,8 +79,6 @@ static const Layout layouts[] = {
 	{ "",      tile },    /* first entry is default */
 	{ "",      NULL },    /* no layout function means floating behavior */
 };
-
-#include "swaptags.c"
 
 /* key definitions */
 #define MODKEY Mod4Mask

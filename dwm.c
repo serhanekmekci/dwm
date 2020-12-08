@@ -299,6 +299,7 @@ static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
 static void view(const Arg *arg);
 static void viewall(const Arg *arg);
+static void swaptags(const Arg *arg);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
 static int xerror(Display *dpy, XErrorEvent *ee);
@@ -3084,6 +3085,80 @@ livereloadxres(const Arg *arg)
 		scheme[i] = drw_scm_create(drw, colors[i], alphas[i], 3);
     focus(NULL);
     arrange(NULL);
+}
+
+void
+swaptags(const Arg *arg)
+{
+  int oldtag, newtag, i;
+  int oldnmaster, oldshowbar;
+  float oldmfact;
+  unsigned int oldsellt;
+  const Layout *oldlt, *oldlt1;
+
+  if((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
+          return;
+
+  oldtag = selmon->tagset[selmon->seltags];
+  newtag = arg->ui & TAGMASK;
+
+  if(newtag == oldtag || !oldtag || (oldtag & (oldtag-1)))
+          return;
+  if(arg->ui == 0)
+          return;
+
+  selmon->pertag->prevtag = selmon->pertag->curtag;
+
+  if(arg->ui == ~0)
+          selmon->pertag->curtag = 0;
+  else {
+          for(i=0; !(arg->ui & 1 << i); i++) ;
+          selmon->pertag->curtag = i + 1;
+  }
+
+  oldnmaster = selmon->pertag->nmasters[selmon->pertag->prevtag];
+  selmon->pertag->nmasters[selmon->pertag->prevtag] = selmon->pertag->nmasters[selmon->pertag->curtag];
+  selmon->pertag->nmasters[selmon->pertag->curtag] = oldnmaster;
+  selmon->nmaster = oldnmaster;
+
+  oldmfact = selmon->pertag->mfacts[selmon->pertag->prevtag];
+  selmon->pertag->mfacts[selmon->pertag->prevtag] = selmon->pertag->mfacts[selmon->pertag->curtag];
+  selmon->pertag->mfacts[selmon->pertag->curtag] = oldmfact;
+  selmon->mfact = oldmfact;
+
+  oldsellt = selmon->pertag->sellts[selmon->pertag->prevtag];
+  selmon->pertag->sellts[selmon->pertag->prevtag] = selmon->pertag->sellts[selmon->pertag->curtag];
+  selmon->pertag->sellts[selmon->pertag->curtag] = oldsellt;
+  selmon->sellt = oldsellt;
+
+  oldlt = selmon->pertag->ltidxs[selmon->pertag->prevtag][selmon->sellt];
+  selmon->pertag->ltidxs[selmon->pertag->prevtag][selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt];
+  selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = oldlt;
+  selmon->lt[selmon->sellt] = oldlt;
+
+  oldlt1 = selmon->pertag->ltidxs[selmon->pertag->prevtag][selmon->sellt^1];
+  selmon->pertag->ltidxs[selmon->pertag->prevtag][selmon->sellt^1] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt^1];
+  selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt^1] = oldlt1;
+  selmon->lt[selmon->sellt^1] = oldlt1;
+
+  oldshowbar = selmon->pertag->showbars[selmon->pertag->prevtag];
+  selmon->pertag->showbars[selmon->pertag->prevtag] = selmon->pertag->showbars[selmon->pertag->curtag];
+  selmon->pertag->showbars[selmon->pertag->curtag] = oldshowbar;
+  selmon->showbar = oldshowbar;
+
+  for(Client *c = selmon->clients; c != NULL; c = c->next) {
+          if((c->tags & newtag) || (c->tags & oldtag))
+                  c->tags ^= oldtag ^ newtag;
+
+          if(!c->tags)
+                  c->tags = newtag;
+  }
+
+  selmon->tagset[selmon->seltags] = newtag;
+
+  focus(NULL);
+  arrange(selmon);
+
 }
 
 int
