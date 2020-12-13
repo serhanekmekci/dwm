@@ -3169,15 +3169,16 @@ void
 livereloadxres(const Arg *arg)
 {
 	load_xresources();
+
 	Monitor *m;
 	for (m = mons; m; m = m->next) {
+		for(Client *c = m->clients; c; c = c->next) {
+			XSetWindowBorderWidth(dpy, c->win, borderpx);
+		}
 		if (m->barwin)
 			XSetWindowBorderWidth(dpy, m->barwin, bb);
 		else
 			continue;
-	}
-	for(Client *c = m->clients; c != NULL; c = c->next) {
-			XSetWindowBorderWidth(dpy, c, borderpx);
 	}
 	int i;
     for (i = 0; i < LENGTH(colors); i++)
