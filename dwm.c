@@ -3172,14 +3172,20 @@ livereloadxres(const Arg *arg)
 
 	Monitor *m;
 	for (m = mons; m; m = m->next) {
+
 		for(Client *c = m->clients; c; c = c->next) {
-			XSetWindowBorderWidth(dpy, c->win, borderpx);
+			XWindowChanges wc;
+			wc.border_width = borderpx;
+			XConfigureWindow(dpy, c->win, CWBorderWidth, &wc);
 		}
-		if (m->barwin)
-			XSetWindowBorderWidth(dpy, m->barwin, bb);
-		else
-			continue;
+
+		if (m->barwin) {
+			XWindowChanges wc;
+			wc.border_width = bb;
+			XConfigureWindow(dpy, m->barwin, CWBorderWidth, &wc);
+		}
 	}
+
 	int i;
     for (i = 0; i < LENGTH(colors); i++)
 		scheme[i] = drw_scm_create(drw, colors[i], alphas[i], 3);
