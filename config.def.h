@@ -7,18 +7,19 @@ static const int vertpad            = 20;       /* vertical padding of bar */
 static const int sidepad            = 25;       /* horizontal padding of bar */
 static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 20;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 25+3;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappoh    = 15;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 25;       /* vert outer gap between windows and screen edge */
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 30;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static int bb = 2; /* bar border */
 static const unsigned int baralpha = 0x64;
 static const unsigned int borderalpha = 0x64;
 static const unsigned int fgalpha = 0x64;
 static char *fonts[]          = {
-	"Font Awesome 5 Free Solid:size=14:antialias=true:autohint=true",
-	"Font Awesome 5 Brands:size=14:antialias=true:autohint=true",
+	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
+	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
 	"Fira Code:size=9:antialias=true:autohint=true:style=Regular",
 };
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
@@ -118,6 +119,7 @@ ResourcePref resources[] = {
 		{ "nmaster",          	INTEGER, &nmaster },
 		{ "resizehints",       	INTEGER, &resizehints },
 		{ "mfact",      	 	FLOAT,   &mfact },
+		{ "barborder",			INTEGER, &bb },
 };
 
 #include "shiftview.c"
@@ -245,5 +247,5 @@ static Signal signals[] = {
 	{ "quit",           quit },
 	{ "setlayout",      setlayout },
 	{ "setlayoutex",    setlayoutex },
-	{ "reload",	    livereloadxres },
+	{ "reload",	        livereloadxres },
 };

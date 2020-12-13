@@ -2543,7 +2543,7 @@ updatebars(void)
 	XSetWindowAttributes wa = {
 		.override_redirect = True,
 		.background_pixel = 0,
-		.border_pixel = 0,
+		.border_pixel = scheme[SchemeNorm][ColBorder].pixel,
 		.colormap = cmap,
 		.event_mask = ButtonPressMask|ExposureMask
 	};
@@ -2551,7 +2551,7 @@ updatebars(void)
 	for (m = mons; m; m = m->next) {
 		if (m->barwin)
 			continue;
-		m->barwin = XCreateWindow(dpy, root, m->wx + sp, m->by + vp, m->ww - 2 * sp, bh, 0, depth,
+		m->barwin = XCreateWindow(dpy, root, m->wx + sp, m->by + vp, m->ww - 2 * sp, bh, bb, depth,
 		                          InputOutput, visual,
 		                          CWOverrideRedirect|CWBackPixel|CWBorderPixel|CWColormap|CWEventMask, &wa);
 		XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
@@ -3169,6 +3169,16 @@ void
 livereloadxres(const Arg *arg)
 {
 	load_xresources();
+	Monitor *m;
+	for (m = mons; m; m = m->next) {
+		if (m->barwin)
+			XSetWindowBorderWidth(dpy, m->barwin, bb);
+		else
+			continue;
+	}
+	for(Client *c = m->clients; c != NULL; c = c->next) {
+			XSetWindowBorderWidth(dpy, c, borderpx);
+	}
 	int i;
     for (i = 0; i < LENGTH(colors); i++)
 		scheme[i] = drw_scm_create(drw, colors[i], alphas[i], 3);
