@@ -1,0 +1,145 @@
+Makefile:	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz
+Makefile:	mkdir -p dwm-${VERSION}
+Makefile:		dwm.1 drw.h util.h ${SRC} dwm.png transient.c dwm-${VERSION}
+Makefile:	tar -cf dwm-${VERSION}.tar dwm-${VERSION}
+Makefile:	gzip dwm-${VERSION}.tar
+Makefile:	rm -rf dwm-${VERSION}
+config.def.h:/* helper for spawning shell commands in the pre dwm-5.0 fashion */
+dwm.c:			for (m = mons; m && m->num != r->monitor; m = m->next);
+dwm.c:		if (*x >= m->wx + m->ww)
+dwm.c:			*x = m->wx + m->ww - WIDTH(c);
+dwm.c:		if (*y >= m->wy + m->wh)
+dwm.c:			*y = m->wy + m->wh - HEIGHT(c);
+dwm.c:		if (*x + *w + 2 * c->bw <= m->wx)
+dwm.c:			*x = m->wx;
+dwm.c:		if (*y + *h + 2 * c->bw <= m->wy)
+dwm.c:			*y = m->wy;
+dwm.c:		showhide(m->stack);
+dwm.c:	else for (m = mons; m; m = m->next)
+dwm.c:		showhide(m->stack);
+dwm.c:	} else for (m = mons; m; m = m->next)
+dwm.c:	strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
+dwm.c:	if (m->lt[m->sellt]->arrange)
+dwm.c:		m->lt[m->sellt]->arrange(m);
+dwm.c:		below && below->next && (below->isfloating || !ISVISIBLEONTAG(below, c->tags) || n != m->nmaster);
+dwm.c:		for (c = m->clients; c; c = c->next)
+dwm.c:			if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+dwm.c:	for (m = mons; m; m = m->next)
+dwm.c:		while (m->stack)
+dwm.c:			unmanage(m->stack, 0);
+dwm.c:		for (m = mons; m && m->next != mon; m = m->next);
+dwm.c:		m->next = mon->next;
+dwm.c:			for (m = mons; m; m = m->next) {
+dwm.c:				for (c = m->clients; c; c = c->next)
+dwm.c:						resizeclient(c, m->mx, m->my, m->mw, m->mh);
+dwm.c:				c->x = m->mx + ev->x;
+dwm.c:				c->y = m->my + ev->y;
+dwm.c:			if ((c->x + c->w) > m->mx + m->mw && c->isfloating)
+dwm.c:				c->x = m->mx + (m->mw / 2 - WIDTH(c) / 2); /* center in x direction */
+dwm.c:			if ((c->y + c->h) > m->my + m->mh && c->isfloating)
+dwm.c:				c->y = m->my + (m->mh / 2 - HEIGHT(c) / 2); /* center in y direction */
+dwm.c:	m->tagset[0] = m->tagset[1] = 1;
+dwm.c:	m->mfact = mfact;
+dwm.c:	m->nmaster = nmaster;
+dwm.c:	m->showbar = showbar;
+dwm.c:	m->topbar = topbar;
+dwm.c:	m->gappih = gappih;
+dwm.c:	m->gappiv = gappiv;
+dwm.c:	m->gappoh = gappoh;
+dwm.c:	m->gappov = gappov;
+dwm.c:	m->lt[0] = &layouts[0];
+dwm.c:	m->lt[1] = &layouts[1 % LENGTH(layouts)];
+dwm.c:	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
+dwm.c:	m->pertag = ecalloc(1, sizeof(Pertag));
+dwm.c:	m->pertag->curtag = m->pertag->prevtag = 1;
+dwm.c:		m->pertag->nmasters[i] = m->nmaster;
+dwm.c:		m->pertag->mfacts[i] = m->mfact;
+dwm.c:		m->pertag->ltidxs[i][0] = m->lt[0];
+dwm.c:		m->pertag->ltidxs[i][1] = m->lt[1];
+dwm.c:		m->pertag->sellts[i] = m->sellt;
+dwm.c:		m->pertag->showbars[i] = m->showbar;
+dwm.c:		for (m = mons; m->next; m = m->next);
+dwm.c:		for (m = mons; m->next != selmon; m = m->next);
+dwm.c:		drw_text(drw, m->ww - tw - 2 * sp - stw, 0, tw, bh, lrpad / 2 - 2, stext, 0);
+dwm.c:	for (c = m->clients; c; c = c->next) {
+dwm.c:		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+dwm.c:		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+dwm.c:	w = blw = TEXTW(m->ltsymbol);
+dwm.c:	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+dwm.c:	if ((w = m->ww - tw - stw - x) > bh) {
+dwm.c:	drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
+dwm.c:	for (m = mons; m; m = m->next)
+dwm.c:	for (m = mons; m; m = m->next)
+dwm.c:	unsigned int w = m->ww;
+dwm.c:	XMoveResizeWindow(dpy, m->barwin, m->wx + sp, m->by + vp, w - 2 * sp, bh);
+dwm.c:	if (!m->sel)
+dwm.c:	if (m->sel->isfloating || !m->lt[m->sellt]->arrange)
+dwm.c:		XRaiseWindow(dpy, m->sel->win);
+dwm.c:	if (m->lt[m->sellt]->arrange) {
+dwm.c:		wc.sibling = m->barwin;
+dwm.c:		for (c = m->stack; c; c = c->snext)
+dwm.c:	c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
+dwm.c:	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+dwm.c:	if (n > m->nmaster)
+dwm.c:			mw = m->nmaster ? (m->ww + m->gappiv*ie) * m->mfact : 0;
+dwm.c:		mw = m->ww - 2*m->gappov*oe + m->gappiv*ie;
+dwm.c:	for (i = 0, my = ty = m->gappoh*oe, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+dwm.c:		if (i < m->nmaster) {
+dwm.c:			r = MIN(n, m->nmaster) - i;
+dwm.c:			h = (m->wh - my - m->gappoh*oe - m->gappih*ie * (r - 1)) / r;
+dwm.c:			resize(c, m->wx + m->gappov*oe, m->wy + my, mw - (2*c->bw) - m->gappiv*ie, h - (2*c->bw), 0);
+dwm.c:			if (my + HEIGHT(c) + m->gappih*ie < m->wh)
+dwm.c:			my += HEIGHT(c) + m->gappih*ie;
+dwm.c:			h = (m->wh - ty - m->gappoh*oe - m->gappih*ie * (r - 1)) / r;
+dwm.c:			resize(c, m->wx + mw + m->gappov*oe, m->wy + ty, m->ww - mw - (2*c->bw) - 2*m->gappov*oe, h - (2*c->bw), 0);
+dwm.c:			if (ty + HEIGHT(c) + m->gappih*ie < m->wh)
+dwm.c:				ty += HEIGHT(c) + m->gappih*ie;
+dwm.c:	for (m = mons; m; m = m->next) {
+dwm.c:		if (m->barwin)
+dwm.c:		w = m->ww;
+dwm.c:		m->barwin = XCreateWindow(dpy, root, m->wx - 2 * sp, m->by - vp, w - 2 * sp, bh, bb, depth,
+dwm.c:		XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
+dwm.c:		XMapRaised(dpy, m->barwin);
+dwm.c:		XSetClassHint(dpy, m->barwin, &ch);
+dwm.c:	m->wy = m->my;
+dwm.c:	m->wh = m->mh;
+dwm.c:	if (m->showbar) {
+dwm.c:		m->wh = m->wh - vertpad - bh;
+dwm.c:		m->by = m->topbar ? m->wy : m->wy + m->wh + vertpad;
+dwm.c:		m->wy = m->topbar ? m->wy + bh + vp : m->wy;
+dwm.c:		m->by = -bh -vp;
+dwm.c:	for (m = mons; m; m = m->next)
+dwm.c:		for (c = m->clients; c; c = c->next)
+dwm.c:		for (n = 0, m = mons; m; m = m->next, n++);
+dwm.c:				for (m = mons; m && m->next; m = m->next);
+dwm.c:					m->next = createmon();
+dwm.c:			for (i = 0, m = mons; i < nn && m; m = m->next, i++)
+dwm.c:				|| unique[i].x_org != m->mx || unique[i].y_org != m->my
+dwm.c:				|| unique[i].width != m->mw || unique[i].height != m->mh)
+dwm.c:					m->num = i;
+dwm.c:					m->mx = m->wx = unique[i].x_org;
+dwm.c:					m->my = m->wy = unique[i].y_org;
+dwm.c:					m->mw = m->ww = unique[i].width;
+dwm.c:					m->mh = m->wh = unique[i].height;
+dwm.c:				for (m = mons; m && m->next; m = m->next);
+dwm.c:				while ((c = m->clients)) {
+dwm.c:					m->clients = c->next;
+dwm.c:		strcpy(stext, "dwm-"VERSION);
+dwm.c:	unsigned int x = m->mx + m->mw;
+dwm.c:		systray->win = XCreateWindow(dpy, root, x, m->by, w, bh, bb, depth,
+dwm.c:	XMoveResizeWindow(dpy, systray->win, x, m->by, w, bh);
+dwm.c:	wc.x = x - sp + bb; wc.y = m->by + vp; wc.width = w; wc.height = bh;
+dwm.c:	wc.stack_mode = Above; wc.sibling = m->barwin;
+dwm.c:	for (m = mons; m; m = m->next) {
+dwm.c:		for (c = m->clients; c; c = c->next) {
+dwm.c:	for (m = mons; m; m = m->next) {
+dwm.c:		for (c = m->clients; c; c = c->next) {
+dwm.c:	for (m = mons; m; m = m->next)
+dwm.c:		for (c = m->clients; c; c = c->next)
+dwm.c:	for (m = mons; m; m = m->next)
+dwm.c:		if (w == m->barwin)
+dwm.c:	for (m = mons; m; m = m->next) {
+dwm.c:		for(Client *c = m->clients; c; c = c->next) {
+dwm.c:		if (m->barwin) {
+dwm.c:			XConfigureWindow(dpy, m->barwin, CWBorderWidth, &wc);
+dwm.c:		die("dwm-"VERSION);
