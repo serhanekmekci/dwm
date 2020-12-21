@@ -1,51 +1,67 @@
 /* See LICENSE file for copyright and license details. */
 
-/* appearance */
-static unsigned int borderpx  = 3;        /* border pixel of windows */
-static unsigned int snap      = 20;       /* snap pixel */
-static const int vertpad            = 20;       /* vertical padding of bar */
-static const int sidepad            = 25;       /* horizontal padding of bar */
-static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 20;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 15;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 25;       /* vert outer gap between windows and screen edge */
-static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
-static int showbar            = 1;        /* 0 means no bar */
-static int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 30;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static int bb = 2; /* bar border */
-static const unsigned int baralpha = 0x64;
-static const unsigned int borderalpha = 0x64;
-static const unsigned int fgalpha = 0x64;
-static char *fonts[]          = {
-	"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
-	"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
-	"Fira Code:size=9:antialias=true:autohint=true:style=Regular",
-};
-static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
+static unsigned int borderpx				= 3;    /* border pixel of windows */
+static unsigned int snap					= 20;   /* snap pixel */
 
-static char normbgcolor[]           = "#000000";
-static char normbordercolor[]       = "#000000";
-static char normfgcolor[]           = "#ffffff";
-static char selfgcolor[]            = "#000000";
-static char selbordercolor[]        = "#ffffff";
-static char selbgcolor[]            = "#ffffff";
-static char dmenu_lnm[]       = "10";
-static char *colors[][3] = {
-       /*               fg           bg           border   */
-       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
-};
-static const unsigned int alphas[][3]      = {
-	/*               fg      bg        border     */
-	[SchemeNorm] = { fgalpha, baralpha, borderalpha },
-	[SchemeSel]  = { fgalpha, baralpha, borderalpha },
-};
+/* bar */
+static int showbar							= 1;	/* 0 means no bar */
+static int topbar							= 1;	/* 0 means bottom bar */
+static const int user_bh					= 30;   /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int vertpad					= 20;   /* vertical padding of bar */
+static const int sidepad					= 25;   /* horizontal padding of bar */
+static int bb								= 2;	/* bar border */
 
+/* gaps */
+static const unsigned int gappih			= 20;   /* horiz inner gap between windows */
+static const unsigned int gappiv			= 20;   /* vert inner gap between windows */
+static const unsigned int gappoh			= 15;   /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov			= 25;   /* vert outer gap between windows and screen edge */
+static const int smartgaps					= 0;    /* 1 means no outer gap when there is only one window */
+
+/* systray */
+static const unsigned int systraypinning	= 0;	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayspacing	= 2;	/* systray spacing */
+static const int systraypinningfailfirst	= 1;	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray				= 1;	/* 0 means no systray */
+
+static char dmenu_lnm[]						= "10"; /* dmenu line number */
+
+static const int swallowfloating			= 0;    /* 1 means swallow floating windows by default */
+
+static char *fonts[]						= {
+											"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
+											"Font Awesome 5 Brands:size=13:antialias=true:autohint=true",
+											"Fira Code:size=9:antialias=true:autohint=true:style=Regular",
+											};
+/* colors */
+static char normbgcolor[]					= "#000000";
+static char normbordercolor[]				= "#000000";
+static char normfgcolor[]					= "#ffffff";
+static char selfgcolor[]					= "#000000";
+static char selbordercolor[]				= "#ffffff";
+static char selbgcolor[]					= "#ffffff";
+static char *colors[][3]					= {
+											/*               fg           bg           border   */
+											[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+											[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+											};
+/* alphas */
+static const unsigned int baralpha			= 0x64; /* bar alpha */
+static const unsigned int borderalpha		= 0x64; /* border alpha */
+static const unsigned int fgalpha			= 0x64; /* foreground alpha */
+
+static const unsigned int alphas[][3]		= {
+											/*               fg      bg        border     */
+											[SchemeNorm] = { fgalpha, baralpha, borderalpha },
+											[SchemeSel]  = { fgalpha, baralpha, borderalpha },
+											};
+
+/* scratchpads */
 typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
+
 const char *sp1[] = {"st", "-n", "sp1", "-g", "120x34", NULL };
 const char *sp2[] = {"st", "-n", "sp2", "-g", "120x34", NULL };
 static Sp scratchpads[] = {
@@ -135,22 +151,25 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-//	{ MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } },
-//	{ MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } },
-//	{ MODKEY|Mod4Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } },
-//	{ MODKEY|Mod4Mask|ShiftMask,    XK_l,      incrogaps,      {.i = -1 } },
-//	{ MODKEY|Mod4Mask|ControlMask,  XK_h,      incrigaps,      {.i = +1 } },
-//	{ MODKEY|Mod4Mask|ControlMask,  XK_l,      incrigaps,      {.i = -1 } },
-//	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
-//	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
-//	{ MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
-//	{ MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } },
-//	{ MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } },
-//	{ MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } },
-//	{ MODKEY|Mod4Mask,              XK_y,      incrohgaps,     {.i = +1 } },
-//	{ MODKEY|Mod4Mask,              XK_o,      incrohgaps,     {.i = -1 } },
-//	{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
-//	{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
+	/* GAP CONTROL */
+	/*
+	 *{ MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } },
+	 *{ MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } },
+	 *{ MODKEY|Mod4Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } },
+	 *{ MODKEY|Mod4Mask|ShiftMask,    XK_l,      incrogaps,      {.i = -1 } },
+	 *{ MODKEY|Mod4Mask|ControlMask,  XK_h,      incrigaps,      {.i = +1 } },
+	 *{ MODKEY|Mod4Mask|ControlMask,  XK_l,      incrigaps,      {.i = -1 } },
+	 *{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
+	 *{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
+	 *{ MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
+	 *{ MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } },
+	 *{ MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } },
+	 *{ MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } },
+	 *{ MODKEY|Mod4Mask,              XK_y,      incrohgaps,     {.i = +1 } },
+	 *{ MODKEY|Mod4Mask,              XK_o,      incrohgaps,     {.i = -1 } },
+	 *{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
+	 *{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
+	 */
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
@@ -217,6 +236,8 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
+
+/* dwmc */
 
 #include "dwmc.c"
 
