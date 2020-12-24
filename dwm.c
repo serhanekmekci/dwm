@@ -2560,7 +2560,7 @@ togglebar(const Arg *arg)
 		if (!selmon->showbar)
 			wc.y = -bh;
 		else if (selmon->showbar) {
-			wc.y = 0;
+			wc.y = 0 + vp;
 			if (!selmon->topbar)
 				wc.y = selmon->mh - bh;
 		}
@@ -3067,10 +3067,13 @@ updatesystray(void)
 		/* init systray */
 		if (!(systray = (Systray *)calloc(1, sizeof(Systray))))
 			die("fatal: could not malloc() %u bytes\n", sizeof(Systray));
-		systray->win = XCreateSimpleWindow(dpy, root, x, y, w, bh, bb, scheme[SchemeNorm][ColBorder].pixel, scheme[SchemeSel][ColBg].pixel);
+
+
 		wa.event_mask        = ButtonPressMask | ExposureMask;
 		wa.override_redirect = True;
 		wa.background_pixel  = scheme[SchemeNorm][ColBg].pixel;
+
+		systray->win = XCreateSimpleWindow(dpy, root, x, y, w, bh, bb, scheme[SchemeNorm][ColBorder].pixel, scheme[SchemeSel][ColBg].pixel);
 		XSelectInput(dpy, systray->win, SubstructureNotifyMask);
 		XChangeProperty(dpy, systray->win, netatom[NetSystemTrayOrientation], XA_CARDINAL, 32,
 				PropModeReplace, (unsigned char *)&netatom[NetSystemTrayOrientationHorz], 1);
@@ -3109,9 +3112,11 @@ updatesystray(void)
 	XMapWindow(dpy, systray->win);
 	XMapSubwindows(dpy, systray->win);
 	/* redraw background */
-	XSetForeground(dpy, drw->gc, scheme[SchemeNorm][ColBg].pixel);
+	wa.background_pixel  = scheme[SchemeNorm][ColBg].pixel;
+	XChangeWindowAttributes(dpy, systray->win, CWBackPixel, &wa);
+
 	/*
-	 *XFillRectangle(dpy, systray->win, drw->gc, 0, 0, w, bh);
+	 *XSetForeground(dpy, drw->gc, scheme[SchemeNorm][ColBg].pixel);
 	 */
 	XSync(dpy, False);
 }
@@ -3546,6 +3551,12 @@ livereloadxres(const Arg *arg)
 	int i;
     for (i = 0; i < LENGTH(colors); i++)
 		scheme[i] = drw_scm_create(drw, colors[i], alphas[i], 3);
+
+	Client *j;
+	for (j = systray->icons; j; j = j->next) {
+		XSetWindowBackground(dpy, j->win, scheme[SchemeNorm][ColBg].pixel);
+	}
+
     focus(NULL);
     arrange(NULL);
 }
