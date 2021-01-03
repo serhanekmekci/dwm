@@ -3124,13 +3124,11 @@ updatesystray(void)
 	XConfigureWindow(dpy, systray->win, CWX|CWY|CWWidth|CWHeight|CWSibling|CWStackMode, &wc);
 	XMapWindow(dpy, systray->win);
 	XMapSubwindows(dpy, systray->win);
-	/* redraw background */
-	wa.background_pixel  = scheme[SchemeNorm][ColBg].pixel;
-	XChangeWindowAttributes(dpy, systray->win, CWBackPixel, &wa);
 
-	/*
-	 *XSetForeground(dpy, drw->gc, scheme[SchemeNorm][ColBg].pixel);
-	 */
+	/* redraw background */
+	/*XSetForeground(dpy, drw->gc, scheme[SchemeNorm][ColBg].pixel);*/
+	/*XFillRectangle(dpy, systray->win, drw->gc, 0, 0, 10, 10);*/
+
 	XSync(dpy, False);
 }
 
@@ -3546,6 +3544,10 @@ livereloadxres(const Arg *arg)
 	load_xresources();
 
 	Monitor *m;
+	XSetWindowAttributes wa;
+	unsigned int i;
+	Client *j;
+
 	for (m = mons; m; m = m->next) {
 
 		for(Client *c = m->clients; c; c = c->next) {
@@ -3561,14 +3563,24 @@ livereloadxres(const Arg *arg)
 		}
 	}
 
-	int i;
     for (i = 0; i < LENGTH(colors); i++)
 		scheme[i] = drw_scm_create(drw, colors[i], alphas[i], 3);
 
-	Client *j;
+	/*
+	 *systray
+	 */
+
+	wa.background_pixel  = scheme[SchemeNorm][ColBg].pixel;
+	wa.border_pixel      = scheme[SchemeNorm][ColBorder].pixel;
+	XChangeWindowAttributes(dpy, systray->win, CWBackPixel|CWBorderPixel, &wa);
+
 	for (j = systray->icons; j; j = j->next) {
-		XSetWindowBackground(dpy, j->win, scheme[SchemeNorm][ColBg].pixel);
+		XReparentWindow(dpy, j->win, systray->win, 0, 0);
+		XChangeWindowAttributes(dpy, j->win, CWBackPixel|CWBorderPixel, &wa);
 	}
+
+	/*XSetForeground(dpy, drw->gc, scheme[SchemeNorm][ColBg].pixel);*/
+	/*XFillRectangle(dpy, systray->win, drw->gc, 0, 0, 10, 10);*/
 
     focus(NULL);
     arrange(NULL);
