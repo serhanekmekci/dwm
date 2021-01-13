@@ -3071,7 +3071,7 @@ updatesystray(void)
 	Client *i;
 	Monitor *m = systraytomon(NULL);
 	unsigned int x = m->mx + m->mw - sp;
-	unsigned int y = m->by + vp + bb;
+	unsigned int y = m->by + vp;
 	unsigned int w = 1;
 
 	if (!showsystray)
