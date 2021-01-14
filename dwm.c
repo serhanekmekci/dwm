@@ -297,7 +297,6 @@ static void incrihgaps(const Arg *arg);
 static void incrivgaps(const Arg *arg);
 static void togglegaps(const Arg *arg);
 static void defaultgaps(const Arg *arg);
-static void getgaps(Monitor *m, int *oh, int *ov, int *ih, int *iv, unsigned int *nc);
 static void setlayout(const Arg *arg);
 static void setlayoutmenu(const Arg *arg);
 static void setmfact(const Arg *arg);
@@ -2243,25 +2242,6 @@ void
 defaultgaps(const Arg *arg)
 {
 	setgaps(gappoh, gappov, gappih, gappiv);
-}
-
-void
-getgaps(Monitor *m, int *oh, int *ov, int *ih, int *iv, unsigned int *nc)
-{
-	unsigned int n, oe, ie;
-	oe = ie = enablegaps;
-	Client *c;
-
-	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
-	if (smartgaps && n == 1) {
-		oe = 0; // outer gaps disabled when only one client
-	}
-
-	*oh = m->gappoh*oe; // outer horizontal gap
-	*ov = m->gappov*oe; // outer vertical gap
-	*ih = m->gappih*ie; // inner horizontal gap
-	*iv = m->gappiv*ie; // inner vertical gap
-	*nc = n;            // number of clients
 }
 
 void

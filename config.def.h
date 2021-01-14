@@ -106,6 +106,7 @@ static const Layout layouts[] = {
  	{ " (s)",      spiral },
  	{ " (d)",      dwindle },
 	{ "|M|",		centeredmaster },
+	{ "D",			deck },
 };
 
 /* key definitions */
