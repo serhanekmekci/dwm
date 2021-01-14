@@ -3107,16 +3107,17 @@ updatesystray(void)
 		if (!(systray = (Systray *)calloc(1, sizeof(Systray))))
 			die("fatal: could not malloc() %u bytes\n", sizeof(Systray));
 
-
 		wa.event_mask        = ButtonPressMask | ExposureMask;
 		wa.override_redirect = True;
 		wa.background_pixel  = scheme[SchemeNorm][ColBg].pixel;
 
-		systray->win = XCreateSimpleWindow(dpy, root, x, y, w, bh, bb, scheme[SchemeNorm][ColBorder].pixel, scheme[SchemeSel][ColBg].pixel);
+		systray->win = XCreateWindow(dpy, root, x, y, w, bh, bb, DefaultDepth(dpy, screen), InputOutput, DefaultVisual(dpy, screen), CWEventMask|CWOverrideRedirect|CWBackPixel, &wa);
+
 		XSelectInput(dpy, systray->win, SubstructureNotifyMask);
+
 		XChangeProperty(dpy, systray->win, netatom[NetSystemTrayOrientation], XA_CARDINAL, 32,
 				PropModeReplace, (unsigned char *)&netatom[NetSystemTrayOrientationHorz], 1);
-		XChangeWindowAttributes(dpy, systray->win, CWEventMask|CWOverrideRedirect|CWBackPixel, &wa);
+
 		XMapRaised(dpy, systray->win);
 		XSetSelectionOwner(dpy, netatom[NetSystemTray], systray->win, CurrentTime);
 		if (XGetSelectionOwner(dpy, netatom[NetSystemTray]) == systray->win) {
