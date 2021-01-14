@@ -273,7 +273,7 @@ static void pop(Client *);
 static void propertynotify(XEvent *e);
 static void quit(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
-static void removesystrayicon(Client *i);
+static void removsystrayicon(Client *i);
 static void resize(Client *c, int x, int y, int w, int h, int interact);
 static void resizebarwin(Monitor *m);
 static void resizeclient(Client *c, int x, int y, int w, int h);
@@ -3107,11 +3107,16 @@ updatesystray(void)
 		if (!(systray = (Systray *)calloc(1, sizeof(Systray))))
 			die("fatal: could not malloc() %u bytes\n", sizeof(Systray));
 
-		wa.event_mask        = ButtonPressMask | ExposureMask;
-		wa.override_redirect = True;
-		wa.background_pixel  = scheme[SchemeNorm][ColBg].pixel;
+		XSetWindowAttributes wa = {
+			.override_redirect = True,
+			.background_pixel = 0,
+			.border_pixel = scheme[SchemeNorm][ColBorder].pixel,
+			.colormap = DefaultColormap(dpy, screen),
+			.event_mask = ButtonPressMask | ExposureMask
+		};
 
-		systray->win = XCreateWindow(dpy, root, x, y, w, bh, bb, DefaultDepth(dpy, screen), InputOutput, DefaultVisual(dpy, screen), CWEventMask|CWOverrideRedirect|CWBackPixel, &wa);
+		systray->win = XCreateWindow(dpy, root, x, y, w, bh, bb,
+				DefaultDepth(dpy,screen), InputOutput, DefaultVisual(dpy, screen), CWOverrideRedirect|CWBackPixel|CWBorderPixel|CWColormap|CWEventMask, &wa);
 
 		XSelectInput(dpy, systray->win, SubstructureNotifyMask);
 
