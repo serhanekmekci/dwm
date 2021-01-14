@@ -14,7 +14,7 @@ static int bb								= 5;	/* bar border */
 /* gaps */
 static const unsigned int gappih			= 15;   /* horiz inner gap between windows */
 static const unsigned int gappiv			= 15;   /* vert inner gap between windows */
-static const unsigned int gappoh			= 15;   /* horiz outer gap between windows and screen edge */
+static const unsigned int gappoh			= 20;   /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov			= 15;   /* vert outer gap between windows and screen edge */
 static const int smartgaps					= 0;    /* 1 means no outer gap when there is only one window */
 
@@ -103,8 +103,8 @@ static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "",      tile },    /* first entry is default */
 	{ "",      NULL },    /* no layout function means floating behavior */
- 	{ "[@]",      spiral },
- 	{ "[\\]",      dwindle },
+ 	{ " (s)",      spiral },
+ 	{ " (d)",      dwindle },
 };
 
 /* key definitions */
