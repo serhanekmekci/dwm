@@ -9,7 +9,7 @@ static int topbar							= 1;	/* 0 means bottom bar */
 static const int user_bh					= 25;   /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int vertpad					= 10;   /* vertical padding of bar */
 static const int sidepad					= 25;   /* horizontal padding of bar */
-static int bb								= 2;	/* bar border */
+static int bb								= 5;	/* bar border */
 
 /* gaps */
 static const unsigned int gappih			= 15;   /* horiz inner gap between windows */
@@ -97,10 +97,14 @@ static const int decorhints			= 1;    /* 1 means respect decoration hints */
 
 static const char *layoutmenu_cmd = "dwm_setlayoutmenu";
 
+#include "fibonacci.c"
+
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "",      tile },    /* first entry is default */
 	{ "",      NULL },    /* no layout function means floating behavior */
+ 	{ "[@]",      spiral },
+ 	{ "[\\]",      dwindle },
 };
 
 /* key definitions */
@@ -175,8 +179,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_x,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+	//{ MODKEY,                       XK_x,      setlayout,      {.v = &layouts[0]} },
+	//{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
