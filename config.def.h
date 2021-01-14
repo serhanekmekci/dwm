@@ -97,14 +97,15 @@ static const int decorhints			= 1;    /* 1 means respect decoration hints */
 
 static const char *layoutmenu_cmd = "dwm_setlayoutmenu";
 
-#include "fibonacci.c"
+#include "layouts.c"
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "",      tile },    /* first entry is default */
-	{ "",      NULL },    /* no layout function means floating behavior */
+	{ "",			tile },    /* first entry is default */
+	{ "",			NULL },    /* no layout function means floating behavior */
  	{ " (s)",      spiral },
  	{ " (d)",      dwindle },
+	{ "|M|",		centeredmaster },
 };
 
 /* key definitions */
