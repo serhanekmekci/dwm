@@ -3096,7 +3096,7 @@ updatesystray(void)
 	XWindowChanges wc;
 	Client *i;
 	Monitor *m = systraytomon(NULL);
-	unsigned int x = m->mx + m->mw - sp;
+	unsigned int x = m->mx + m->mw - sp - bb;
 	unsigned int y = m->by + vp;
 	unsigned int w = 1;
 
