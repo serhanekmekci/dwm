@@ -37,13 +37,29 @@ static char *fonts[]						= {
 static char normbgcolor[]					= "#000000";
 static char normbordercolor[]				= "#000000";
 static char normfgcolor[]					= "#ffffff";
+
 static char selfgcolor[]					= "#000000";
 static char selbordercolor[]				= "#ffffff";
 static char selbgcolor[]					= "#ffffff";
+
+static char statfg[]						= "#000000";
+static char statbg[]						= "#ffffff";
+static char statborder[]					= "#ffffff";
+
+static char tagnormfg[]						= "#000000";
+static char tagnormbg[]						= "#ffffff";
+static char tagnormborder[]					= "#ffffff";
+
+static char tagselfg[]						= "#000000";
+static char tagselbg[]						= "#ffffff";
+static char tagselborder[]					= "#ffffff";
+
 static char *colors[][3]					= {
-											/*               fg           bg           border   */
-											[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-											[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+											[SchemeNorm]		= { normfgcolor, normbgcolor, normbordercolor	},
+											[SchemeSel]			= { selfgcolor,  selbgcolor,  selbordercolor	},
+											[SchemeStatus]		= { statfg,		 statbg,	  statborder		}, // Statusbar right {text,background,not used but cannot be empty}
+											[SchemeTagsNorm]	= { tagnormfg,   tagnormbg,   tagnormborder		}, // Tagbar left unselected {text,background,not used but cannot be empty}
+											[SchemeTagsSel]		= { tagselfg,	 tagselbg,	  tagselborder		}, // Tagbar left selected {text,background,not used but cannot be empty}
 											};
 /* alphas */
 static const unsigned int baralpha			= 0x64; /* bar alpha */
@@ -52,8 +68,11 @@ static const unsigned int fgalpha			= 0x64; /* foreground alpha */
 
 static const unsigned int alphas[][3]		= {
 											/*               fg      bg        border     */
-											[SchemeNorm] = { fgalpha, baralpha, borderalpha },
-											[SchemeSel]  = { fgalpha, baralpha, borderalpha },
+											[SchemeNorm]		= { fgalpha, baralpha, borderalpha	},
+											[SchemeSel]			= { fgalpha, baralpha, borderalpha	},
+											[SchemeStatus]		= { fgalpha, baralpha, borderalpha	}, // Statusbar right {text,background,not used but cannot be empty}
+											[SchemeTagsNorm]	= { fgalpha, baralpha, borderalpha	}, // Tagbar left unselected {text,background,not used but cannot be empty}
+											[SchemeTagsSel]		= { fgalpha, baralpha, borderalpha	}, // Tagbar left selected {text,background,not used but cannot be empty}
 											};
 
 /* scratchpads */
@@ -136,6 +155,15 @@ ResourcePref resources[] = {
 		{ "selbgcolor",         STRING,  &selbgcolor },
 		{ "selbordercolor",     STRING,  &selbordercolor },
 		{ "selfgcolor",         STRING,  &selfgcolor },
+		{ "statfg",				STRING,  &statfg },
+		{ "statbg",				STRING,  &statbg },
+		{ "statborder",			STRING,  &statborder },
+		{ "tagnormfg",			STRING,  &tagnormfg },
+		{ "tagnormbg",			STRING,  &tagnormbg },
+		{ "tagnormborder",		STRING,  &tagnormborder },
+		{ "tagselfg",			STRING,  &tagselfg },
+		{ "tagselbg",			STRING,  &tagselbg },
+		{ "tagselborder",		STRING,  &tagselborder },
 		{ "borderpx",          	INTEGER, &borderpx },
 		{ "snap",          		INTEGER, &snap },
 		{ "topbar",				INTEGER, &topbar },
