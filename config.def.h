@@ -104,6 +104,23 @@ static Sp scratchpads[] = {
 /* tagging */
 static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
+/* grid of tags */
+#define DRAWCLASSICTAGS             1 << 1
+#define DRAWTAGGRID                 1 << 1
+
+#define SWITCHTAG_UP                1 << 1
+#define SWITCHTAG_DOWN              1 << 1
+#define SWITCHTAG_LEFT              1 << 2
+#define SWITCHTAG_RIGHT             1 << 3
+#define SWITCHTAG_TOGGLETAG         1 << 4
+#define SWITCHTAG_TAG               1 << 5
+#define SWITCHTAG_VIEW              1 << 6
+#define SWITCHTAG_TOGGLEVIEW        1 << 7
+
+static const unsigned int drawtagmask = DRAWTAGGRID; /* | DRAWCLASSICTAGS to show classic row of tags */
+static const int tagrows = 3;
+
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -267,6 +284,15 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+    { MODKEY|ControlMask,           XK_Up,     switchtag,      { .ui = SWITCHTAG_UP     | SWITCHTAG_VIEW } },
+    { MODKEY|ControlMask,           XK_Down,   switchtag,      { .ui = SWITCHTAG_DOWN   | SWITCHTAG_VIEW } },
+    { MODKEY|ControlMask,           XK_Right,  switchtag,      { .ui = SWITCHTAG_RIGHT  | SWITCHTAG_VIEW } },
+    { MODKEY|ControlMask,           XK_Left,   switchtag,      { .ui = SWITCHTAG_LEFT   | SWITCHTAG_VIEW } },
+
+    { MODKEY|Mod4Mask,              XK_Up,     switchtag,      { .ui = SWITCHTAG_UP     | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+    { MODKEY|Mod4Mask,              XK_Down,   switchtag,      { .ui = SWITCHTAG_DOWN   | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+    { MODKEY|Mod4Mask,              XK_Right,  switchtag,      { .ui = SWITCHTAG_RIGHT  | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+    { MODKEY|Mod4Mask,              XK_Left,   switchtag,      { .ui = SWITCHTAG_LEFT   | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
 	{ MODKEY,			XK_z,		shiftview,	{ .i = -1 } },
 
 };

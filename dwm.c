@@ -243,6 +243,7 @@ static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
 static void drawbar(Monitor *m);
 static void drawbars(void);
+static void drawtaggrid(Monitor *m, int *x_pos, unsigned int occ);
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static void focus(Client *c);
@@ -306,6 +307,7 @@ static void showhide(Client *c);
 static void sigchld(int unused);
 static void sigdwmblocks(const Arg *arg);
 static void spawn(const Arg *arg);
+static void switchtag(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
 static void tagall(const Arg *arg);
@@ -698,10 +700,13 @@ void
 buttonpress(XEvent *e)
 {
 	unsigned int i, x, click, occ = 0;
+	unsigned int columns;
 	Arg arg = {0};
 	Client *c;
 	Monitor *m;
 	XButtonPressedEvent *ev = &e->xbutton;
+
+	columns = LENGTH(tags) / tagrows + ((LENGTH(tags) % tagrows > 0) ? 1 : 0);
 
 	click = ClkRootWin;
 	/* focus monitor if necessary */
@@ -714,17 +719,28 @@ buttonpress(XEvent *e)
 		i = x = 0;
 		for (c = m->clients; c; c = c->next)
 			occ |= c->tags == 255 ? 0 : c->tags;
+		if (drawtagmask & DRAWCLASSICTAGS)
 		do {
 			/* do not reserve space for vacant tags */
 			if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
 				continue;
 			x += TEXTW(tags[i]);
 		} while (ev->x >= x && ++i < LENGTH(tags));
-		if (i < LENGTH(tags)) {
+		if(i < LENGTH(tags) && (drawtagmask & DRAWCLASSICTAGS)) {
+		} else if(ev->x < x + columns * bh / tagrows && (drawtagmask & DRAWTAGGRID)) {
 			click = ClkTagBar;
+			i = (ev->x - x) / (bh / tagrows);
+			i = i + columns * (ev->y / (bh / tagrows));
+			if (i >= LENGTH(tags)) {
+				i = LENGTH(tags) - 1;
+			}
 			arg.ui = 1 << i;
-		} else if (ev->x < x + blw)
+		}
+		else if(ev->x < x + blw + columns * bh / tagrows) {
+			/*click = ClkTagBar;*/
+			/*arg.ui = 1 << i;*/
 			click = ClkLtSymbol;
+		}
 		else if (ev->x > (x = selmon->ww - (int)TEXTW(stext) + lrpad - 2 * sp - getsystraywidth())) {
  			click = ClkStatusText;
 
@@ -1117,6 +1133,7 @@ drawbar(Monitor *m)
 			urg |= c->tags;
 	}
 	x = 0;
+	if (drawtagmask & DRAWCLASSICTAGS)
 	for (i = 0; i < LENGTH(tags); i++) {
 		/* do not draw vacant tags */
 		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
@@ -1126,6 +1143,9 @@ drawbar(Monitor *m)
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeTagsSel : SchemeTagsNorm]);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
 		x += w;
+	}
+	if (drawtagmask & DRAWTAGGRID) {
+		drawtaggrid(m,&x,occ);
 	}
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeTagsNorm]);
@@ -1153,6 +1173,49 @@ drawbars(void)
 
 	for (m = mons; m; m = m->next)
 		drawbar(m);
+}
+
+void drawtaggrid(Monitor *m, int *x_pos, unsigned int occ)
+{
+    unsigned int x, y, h, max_x, columns;
+    int invert, i,j, k;
+
+    h = bh / tagrows;
+    x = max_x = *x_pos;
+    y = 0;
+    columns = LENGTH(tags) / tagrows + ((LENGTH(tags) % tagrows > 0) ? 1 : 0);
+
+    /* Firstly we will fill the borders of squares */
+
+    XSetForeground(drw->dpy, drw->gc, scheme[SchemeNorm][ColBorder].pixel);
+    XFillRectangle(dpy, drw->drawable, drw->gc, x, y, h*columns + 1, bh);
+
+    /* We will draw LENGTH(tags) squares in tagraws raws. */
+	for(j = 0,  i= 0; j < tagrows; j++) {
+        x = *x_pos;
+        for (k = 0; k < columns && i < LENGTH(tags); k++, i++) {
+		    invert = m->tagset[m->seltags] & 1 << i ? 0 : 1;
+
+            /* Select active color for current square */
+            XSetForeground(drw->dpy, drw->gc, !invert ? scheme[SchemeSel][ColBg].pixel :
+                                scheme[SchemeNorm][ColFg].pixel);
+            XFillRectangle(dpy, drw->drawable, drw->gc, x+1, y+1, h-1, h-1);
+
+            /* Mark square if tag has client */
+            if (occ & 1 << i) {
+                XSetForeground(drw->dpy, drw->gc, !invert ? scheme[SchemeSel][ColFg].pixel :
+                                scheme[SchemeNorm][ColBg].pixel);
+                XFillRectangle(dpy, drw->drawable, drw->gc, x + 1, y + 1,
+                               h / 2, h / 2);
+            }
+		    x += h;
+            if (x > max_x) {
+                max_x = x;
+            }
+        }
+        y += h;
+	}
+    *x_pos = max_x + 1;
 }
 
 void
@@ -2497,6 +2560,82 @@ showhide(Client *c)
 		showhide(c->snext);
 		XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
 	}
+}
+
+void switchtag(const Arg *arg)
+{
+    unsigned int columns;
+    unsigned int new_tagset = 0;
+    unsigned int pos, i;
+    int col, row;
+    Arg new_arg;
+
+    columns = LENGTH(tags) / tagrows + ((LENGTH(tags) % tagrows > 0) ? 1 : 0);
+
+    for (i = 0; i < LENGTH(tags); ++i) {
+        if (!(selmon->tagset[selmon->seltags] & 1 << i)) {
+            continue;
+        }
+        pos = i;
+        row = pos / columns;
+        col = pos % columns;
+        if (arg->ui & SWITCHTAG_UP) {     /* UP */
+            row --;
+            if (row < 0) {
+                row = tagrows - 1;
+            }
+            do {
+                pos = row * columns + col;
+                row --;
+            } while (pos >= LENGTH(tags));
+        }
+        if (arg->ui & SWITCHTAG_DOWN) {     /* DOWN */
+            row ++;
+            if (row >= tagrows) {
+                row = 0;
+            }
+            pos = row * columns + col;
+            if (pos >= LENGTH(tags)) {
+                row = 0;
+            }
+            pos = row * columns + col;
+        }
+        if (arg->ui & SWITCHTAG_LEFT) {     /* LEFT */
+            col --;
+            if (col < 0) {
+                col = columns - 1;
+            }
+            do {
+                pos = row * columns + col;
+                col --;
+            } while (pos >= LENGTH(tags));
+        }
+        if (arg->ui & SWITCHTAG_RIGHT) {     /* RIGHT */
+            col ++;
+            if (col >= columns) {
+                col = 0;
+            }
+            pos = row * columns + col;
+            if (pos >= LENGTH(tags)) {
+                col = 0;
+                pos = row * columns + col;
+            }
+        }
+        new_tagset |= 1 << pos;
+    }
+    new_arg.ui = new_tagset;
+    if (arg->ui & SWITCHTAG_TOGGLETAG) {
+        toggletag(&new_arg);
+    }
+    if (arg->ui & SWITCHTAG_TAG) {
+        tag(&new_arg);
+    }
+    if (arg->ui & SWITCHTAG_VIEW) {
+        view (&new_arg);
+    }
+    if (arg->ui & SWITCHTAG_TOGGLEVIEW) {
+        toggleview (&new_arg);
+    }
 }
 
 void
