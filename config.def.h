@@ -7,7 +7,7 @@ static unsigned int snap					= 20;   /* snap pixel */
 static int showbar							= 1;	/* 0 means no bar */
 static int topbar							= 1;	/* 0 means bottom bar */
 static const int user_bh					= 25;   /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const int vertpad					= 10;   /* vertical padding of bar */
+static const int vertpad					= 15;   /* vertical padding of bar */
 static const int sidepad					= 20;   /* horizontal padding of bar */
 static int bb								= 5;	/* bar border */
 
@@ -260,6 +260,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayoutmenu,  {0} },
 	//{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[1]} },
+	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
