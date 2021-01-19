@@ -8,7 +8,7 @@ static int showbar							= 1;	/* 0 means no bar */
 static int topbar							= 1;	/* 0 means bottom bar */
 static const int user_bh					= 25;   /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int vertpad					= 15;   /* vertical padding of bar */
-static const int sidepad					= 20;   /* horizontal padding of bar */
+static const int sidepad					= 50;   /* horizontal padding of bar */
 static int bb								= 5;	/* bar border */
 
 /* gaps */
@@ -54,12 +54,22 @@ static char tagselfg[]						= "#000000";
 static char tagselbg[]						= "#ffffff";
 static char tagselborder[]					= "#ffffff";
 
+static char infonormfg[]					= "#000000";
+static char infonormbg[]					= "#ffffff";
+static char infonormborder[]				= "#ffffff";
+
+static char infoselfg[]						= "#000000";
+static char infoselbg[]						= "#ffffff";
+static char infoselborder[]					= "#ffffff";
+
 static char *colors[][3]					= {
 											[SchemeNorm]		= { normfgcolor, normbgcolor, normbordercolor	},
 											[SchemeSel]			= { selfgcolor,  selbgcolor,  selbordercolor	},
 											[SchemeStatus]		= { statfg,		 statbg,	  statborder		}, // Statusbar right {text,background,not used but cannot be empty}
 											[SchemeTagsNorm]	= { tagnormfg,   tagnormbg,   tagnormborder		}, // Tagbar left unselected {text,background,not used but cannot be empty}
 											[SchemeTagsSel]		= { tagselfg,	 tagselbg,	  tagselborder		}, // Tagbar left selected {text,background,not used but cannot be empty}
+											[SchemeInfoNorm]	= { infonormfg,  infonormbg,  infonormborder	}, // infobar middle  unselected {text,background,not used but cannot be empty}
+											[SchemeInfoSel]		= { infoselfg,	 infoselbg,	  infoselborder		}, // infobar middle  selected {text,background,not used but cannot be empty}
 											};
 /* alphas */
 static const unsigned int baralpha			= 0x64; /* bar alpha */
@@ -73,6 +83,8 @@ static const unsigned int alphas[][3]		= {
 											[SchemeStatus]		= { fgalpha, baralpha, borderalpha	}, // Statusbar right {text,background,not used but cannot be empty}
 											[SchemeTagsNorm]	= { fgalpha, baralpha, borderalpha	}, // Tagbar left unselected {text,background,not used but cannot be empty}
 											[SchemeTagsSel]		= { fgalpha, baralpha, borderalpha	}, // Tagbar left selected {text,background,not used but cannot be empty}
+											[SchemeInfoNorm]	= { fgalpha, baralpha, borderalpha	}, // infobar middle  unselected {text,background,not used but cannot be empty}
+											[SchemeInfoSel]		= { fgalpha, baralpha, borderalpha	}, // infobar middle  selected {text,background,not used but cannot be empty}
 											};
 
 /* scratchpads */
@@ -164,6 +176,12 @@ ResourcePref resources[] = {
 		{ "tagselfg",			STRING,  &tagselfg },
 		{ "tagselbg",			STRING,  &tagselbg },
 		{ "tagselborder",		STRING,  &tagselborder },
+		{ "infonormfg",			STRING,  &infonormfg },
+		{ "infonormbg",			STRING,  &infonormbg },
+		{ "infonormborder",		STRING,  &infonormborder },
+		{ "infoselfg",			STRING,  &infoselfg },
+		{ "infoselbg",			STRING,  &infoselbg },
+		{ "infoselborder",		STRING,  &infoselborder },
 		{ "borderpx",          	INTEGER, &borderpx },
 		{ "snap",          		INTEGER, &snap },
 		{ "topbar",				INTEGER, &topbar },
