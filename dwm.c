@@ -727,6 +727,8 @@ buttonpress(XEvent *e)
 			x += TEXTW(tags[i]);
 		} while (ev->x >= x && ++i < LENGTH(tags));
 		if(i < LENGTH(tags) && (drawtagmask & DRAWCLASSICTAGS)) {
+			click = ClkTagBar;
+			arg.ui = 1 << i;
 		} else if(ev->x < x + columns * bh / tagrows && (drawtagmask & DRAWTAGGRID)) {
 			click = ClkTagBar;
 			i = (ev->x - x) / (bh / tagrows);
@@ -737,8 +739,6 @@ buttonpress(XEvent *e)
 			arg.ui = 1 << i;
 		}
 		else if(ev->x < x + blw + columns * bh / tagrows) {
-			/*click = ClkTagBar;*/
-			/*arg.ui = 1 << i;*/
 			click = ClkLtSymbol;
 		}
 		else if (ev->x > (x = selmon->ww - (int)TEXTW(stext) + lrpad - 2 * sp - getsystraywidth())) {
@@ -762,7 +762,7 @@ buttonpress(XEvent *e)
 			}
 		}
 		else
-			click = ClkStatusText;
+			click = ClkWinTitle;
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
