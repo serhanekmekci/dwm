@@ -1246,7 +1246,7 @@ drawbar(Monitor *m)
 	// Draw bartabgroups
 	drw_rect(drw, x, 0, m->ww - tw - stw - x, bh, 1, 1);
 	if ((w = m->ww - tw - stw - x) > bh) {
-		bartabcalculate(m, x, stw, -1, bartabdraw);
+		bartabcalculate(m, x, stw + tw, -1, bartabdraw);
 		if (BARTAB_BOTTOMBORDER) {
 			drw_setscheme(drw, scheme[SchemeInfoNorm]);
 			drw_rect(drw, 0, bh - 1, m->ww, 1, 1, 0);
