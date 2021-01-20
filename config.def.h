@@ -62,6 +62,10 @@ static char infoselfg[]						= "#000000";
 static char infoselbg[]						= "#ffffff";
 static char infoselborder[]					= "#ffffff";
 
+static char taggridfg[]						= "#f8faaa";
+static char taggridbg[]						= "#005577";
+static char taggridborder[]					= "#ffffff";
+
 static char *colors[][3]					= {
 											[SchemeNorm]		= { normfgcolor, normbgcolor, normbordercolor	},
 											[SchemeSel]			= { selfgcolor,  selbgcolor,  selbordercolor	},
@@ -70,6 +74,7 @@ static char *colors[][3]					= {
 											[SchemeTagsSel]		= { tagselfg,	 tagselbg,	  tagselborder		}, // Tagbar left selected {text,background,not used but cannot be empty}
 											[SchemeInfoNorm]	= { infonormfg,  infonormbg,  infonormborder	}, // infobar middle  unselected {text,background,not used but cannot be empty}
 											[SchemeInfoSel]		= { infoselfg,	 infoselbg,	  infoselborder		}, // infobar middle  selected {text,background,not used but cannot be empty}
+											[SchemeTagGrid]		= { taggridfg,	 taggridbg,	  taggridborder		},
 											};
 /* alphas */
 static const unsigned int baralpha			= 0x64; /* bar alpha */
@@ -85,6 +90,7 @@ static const unsigned int alphas[][3]		= {
 											[SchemeTagsSel]		= { fgalpha, baralpha, borderalpha	}, // Tagbar left selected {text,background,not used but cannot be empty}
 											[SchemeInfoNorm]	= { fgalpha, baralpha, borderalpha	}, // infobar middle  unselected {text,background,not used but cannot be empty}
 											[SchemeInfoSel]		= { fgalpha, baralpha, borderalpha	}, // infobar middle  selected {text,background,not used but cannot be empty}
+											[SchemeTagGrid]		= { fgalpha, baralpha, borderalpha	},
 											};
 
 /* scratchpads */
@@ -105,10 +111,10 @@ static Sp scratchpads[] = {
 static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
 /* grid of tags */
-#define DRAWCLASSICTAGS             1 << 1
+#define DRAWCLASSICTAGS             1 << 0
 #define DRAWTAGGRID                 1 << 1
 
-#define SWITCHTAG_UP                1 << 1
+#define SWITCHTAG_UP                1 << 0
 #define SWITCHTAG_DOWN              1 << 1
 #define SWITCHTAG_LEFT              1 << 2
 #define SWITCHTAG_RIGHT             1 << 3
@@ -199,6 +205,9 @@ ResourcePref resources[] = {
 		{ "infoselfg",			STRING,  &infoselfg },
 		{ "infoselbg",			STRING,  &infoselbg },
 		{ "infoselborder",		STRING,  &infoselborder },
+		{ "taggridfg",			STRING,  &taggridfg },
+		{ "taggridbg",			STRING,  &taggridbg },
+		{ "taggridborder",		STRING,  &taggridborder },
 		{ "borderpx",          	INTEGER, &borderpx },
 		{ "snap",          		INTEGER, &snap },
 		{ "topbar",				INTEGER, &topbar },

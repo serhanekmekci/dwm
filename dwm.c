@@ -94,7 +94,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel, SchemeStatus, SchemeTagsSel, SchemeTagsNorm, SchemeInfoSel, SchemeInfoNorm}; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeStatus, SchemeTagsSel, SchemeTagsNorm, SchemeInfoSel, SchemeInfoNorm, SchemeTagGrid}; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetSystemTray, NetSystemTrayOP, NetSystemTrayOrientation, NetSystemTrayOrientationHorz,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
@@ -1187,7 +1187,7 @@ void drawtaggrid(Monitor *m, int *x_pos, unsigned int occ)
 
     /* Firstly we will fill the borders of squares */
 
-    XSetForeground(drw->dpy, drw->gc, scheme[SchemeNorm][ColBorder].pixel);
+    XSetForeground(drw->dpy, drw->gc, scheme[SchemeTagGrid][ColBorder].pixel);
     XFillRectangle(dpy, drw->drawable, drw->gc, x, y, h*columns + 1, bh);
 
     /* We will draw LENGTH(tags) squares in tagraws raws. */
@@ -1197,16 +1197,14 @@ void drawtaggrid(Monitor *m, int *x_pos, unsigned int occ)
 		    invert = m->tagset[m->seltags] & 1 << i ? 0 : 1;
 
             /* Select active color for current square */
-            XSetForeground(drw->dpy, drw->gc, !invert ? scheme[SchemeSel][ColBg].pixel :
-                                scheme[SchemeNorm][ColFg].pixel);
-            XFillRectangle(dpy, drw->drawable, drw->gc, x+1, y+1, h-1, h-1);
+			XSetForeground(drw->dpy, drw->gc, !invert ? scheme[SchemeTagGrid][ColBg].pixel : scheme[SchemeTagGrid][ColFg].pixel);
+			XFillRectangle(dpy, drw->drawable, drw->gc, x+1, y+1, h-1, h-1);
 
             /* Mark square if tag has client */
             if (occ & 1 << i) {
-                XSetForeground(drw->dpy, drw->gc, !invert ? scheme[SchemeSel][ColFg].pixel :
-                                scheme[SchemeNorm][ColBg].pixel);
-                XFillRectangle(dpy, drw->drawable, drw->gc, x + 1, y + 1,
-                               h / 2, h / 2);
+				XSetForeground(drw->dpy, drw->gc, !invert ? scheme[SchemeTagGrid][ColFg].pixel : scheme[SchemeTagGrid][ColBg].pixel);
+				XFillRectangle(dpy, drw->drawable, drw->gc, x + 1, y + 1,
+							   h / 2, h / 2);
             }
 		    x += h;
             if (x > max_x) {
