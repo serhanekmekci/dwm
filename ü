@@ -604,31 +604,21 @@ bartabcalculate(
 	for (c = m->clients, i = 0; c; c = c->next) {
 		if (!ISVISIBLE(c)) continue;
 		if (clientsnmaster + clientsnstack == 0 || floatlayout) {
-			 x = offx + (((m->mw - offx - sw - 2*sp) / (clientsnmaster + clientsnstack + clientsnfloating)) * i);
-			 w = (m->mw - offx - sw - 2*sp) / (clientsnmaster + clientsnstack + clientsnfloating);
+			 x = offx + (((m->mw - offx - sw) / (clientsnmaster + clientsnstack + clientsnfloating)) * i);
+			 w = (m->mw - offx - sw) / (clientsnmaster + clientsnstack + clientsnfloating);
 			 tgactive = 1;
 		} else if (!c->isfloating && (fulllayout || ((clientsnmaster == 0) ^ (clientsnstack == 0)))) {
-			 x = offx + (((m->mw - offx - sw -2*sp) / (clientsnmaster + clientsnstack)) * i);
-			 w = (m->mw - offx - sw - 2*sp) / (clientsnmaster + clientsnstack);
+			 x = offx + (((m->mw - offx - sw) / (clientsnmaster + clientsnstack)) * i);
+			 w = (m->mw - offx - sw) / (clientsnmaster + clientsnstack);
 			 tgactive = 1;
 		} else if (i < m->nmaster && !c->isfloating) {
-			 /*x = offx + ((((m->mw * m->mfact) - offx) /clientsnmaster) * i);*/
-			 /*w = ((m->mw * m->mfact) - offx) - 2*sp / clientsnmaster;*/
-			 x = offx + (((m->mw - offx - sw -2*sp) / (clientsnmaster + clientsnstack)) * i);
-			 w = (m->mw - offx - sw - 2*sp) / (clientsnmaster + clientsnstack);
-			 /*tgactive = 1;*/
-
+			 x = offx + ((((m->mw * m->mfact) - offx) /clientsnmaster) * i);
+			 w = ((m->mw * m->mfact) - offx - 2 * sp) / clientsnmaster;
 			 tgactive = masteractive;
-
 		} else if (!c->isfloating) {
-			 /*x = (m->mw * m->mfact) + ((((m->mw * (1 - m->mfact)) - sw) / clientsnstack) * (i - m->nmaster));*/
-			 /*x -= 2*sp;*/
-			 /*w = ((m->mw * (1 - m->mfact)) - sw) / clientsnstack;*/
-
-			 x = offx + (((m->mw - offx - sw -2*sp) / (clientsnmaster + clientsnstack)) * i);
-			 w = (m->mw - offx - sw - 2*sp) / (clientsnmaster + clientsnstack);
+			 x = (m->mw * m->mfact) + ((((m->mw * (1 - m->mfact)) - sw) / clientsnstack) * (i - m->nmaster));
+			 w = ((m->mw * (1 - m->mfact)) - sw) / clientsnstack;
 			 tgactive = !masteractive;
-
 		} else continue;
 		tabfn(m, c, passx, x, w, tgactive);
 		i++;
