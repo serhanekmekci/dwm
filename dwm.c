@@ -854,10 +854,11 @@ buttonpress(XEvent *e)
 				}
 			}
 		}
-		else
+		else {
 			if (drawtagmask & DRAWTAGGRID)
 				x += blw + columns * bh / tagrows;
 			bartabcalculate(selmon, x, (int)TEXTW(stext) - lrpad + 2 + getsystraywidth(), ev->x, battabclick);
+		}
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
