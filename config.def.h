@@ -7,8 +7,8 @@ static unsigned int snap					= 20;   /* snap pixel */
 static int showbar							= 1;	/* 0 means no bar */
 static int topbar							= 1;	/* 0 means bottom bar */
 static const int user_bh					= 25;   /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const int vertpad					= 15;   /* vertical padding of bar */
-static const int sidepad					= 20;   /* horizontal padding of bar */
+static const int vertpad					= 0;   /* vertical padding of bar */
+static const int sidepad					= 0;   /* horizontal padding of bar */
 static int bb								= 5;	/* bar border */
 
 /* gaps */
@@ -127,10 +127,10 @@ static const unsigned int drawtagmask = DRAWTAGGRID; /* | DRAWCLASSICTAGS to sho
 static const int tagrows = 3;
 
 /* Bartabgroups properties */
-#define BARTAB_BORDERS 1       // 0 = off, 1 = on
+#define BARTAB_BORDERS 0       // 0 = off, 1 = on
 #define BARTAB_BOTTOMBORDER 0  // 0 = off, 1 = on
-#define BARTAB_TAGSINDICATOR 2 // 0 = off, 1 = on if >1 client/view tag, 2 = always on
-#define BARTAB_TAGSPX 5        // # pixels for tag grid boxes
+#define BARTAB_TAGSINDICATOR 0 // 0 = off, 1 = on if >1 client/view tag, 2 = always on
+#define BARTAB_TAGSPX 7        // # pixels for tag grid boxes
 #define BARTAB_TAGSROWS 3      // # rows in tag grid (9 tags, e.g. 3x3)
 //static void (*bartabmonfns[])(Monitor *) = { monocle [> , customlayoutfn <] };
 //static void (*bartabfloatfns[])(Monitor *) = { NULL [> , customlayoutfn <] };

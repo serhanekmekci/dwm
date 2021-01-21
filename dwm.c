@@ -602,7 +602,7 @@ bartabcalculate(
 	/*for (i = 0; i < LENGTH(bartabfloatfns); i++) if (m ->lt[m->sellt]->arrange == bartabfloatfns[i]) { floatlayout = 1; break; }*/
 	/*for (i = 0; i < LENGTH(bartabmonfns); i++) if (m ->lt[m->sellt]->arrange == bartabmonfns[i]) { fulllayout = 1; break; }*/
 	for (c = m->clients, i = 0; c; c = c->next) {
-		if (!ISVISIBLE(c)) continue;
+	if (!ISVISIBLE(c)) continue;
 		if (clientsnmaster + clientsnstack == 0 || floatlayout) {
 			 x = offx + (((m->mw - offx - sw) / (clientsnmaster + clientsnstack + clientsnfloating)) * i);
 			 w = (m->mw - offx - sw) / (clientsnmaster + clientsnstack + clientsnfloating);
@@ -854,7 +854,7 @@ buttonpress(XEvent *e)
 			}
 		}
 		else // Focus clicked tab bar item
-			bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2, ev->x, battabclick);
+			bartabcalculate(selmon, x - sw, TEXTW(stext) - lrpad - 2, ev->x, battabclick);
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
@@ -1246,7 +1246,7 @@ drawbar(Monitor *m)
 	// Draw bartabgroups
 	drw_rect(drw, x, 0, m->ww - tw - stw - x, bh, 1, 1);
 	if ((w = m->ww - tw - stw - x) > bh) {
-		bartabcalculate(m, x, stw + tw, -1, bartabdraw);
+		bartabcalculate(m, x, tw, -1, bartabdraw);
 		if (BARTAB_BOTTOMBORDER) {
 			drw_setscheme(drw, scheme[SchemeInfoNorm]);
 			drw_rect(drw, 0, bh - 1, m->ww, 1, 1, 0);
