@@ -574,16 +574,25 @@ bartabdraw(Monitor *m, Client *c, int unused, int x, int w, int groupactive) {
 }
 
 void
-battabclick(Monitor *m, Client *c, int passx, int x, int w, int unused) {
+battabclick(Monitor *m, Client *c, int passx, int x, int w, int btn) {
 	if (passx >= x && passx <= x + w) {
-		focus(c);
-		restack(selmon);
+		switch (btn) {
+			case 1:
+				focus(c);
+				restack(selmon);
+				break;
+			case 3:
+				focus(c);
+				killclient(c);
+				restack(selmon);
+				break;
+		}
 	}
 }
 
 void
 bartabcalculate(
-	Monitor *m, int offx, int sw, int passx,
+	Monitor *m, int offx, int sw, int passx, int button,
 	void(*tabfn)(Monitor *, Client *, int, int, int, int)
 ) {
 	Client *c;
@@ -630,7 +639,11 @@ bartabcalculate(
 			 tgactive = !masteractive;
 
 		} else continue;
-		tabfn(m, c, passx, x, w, tgactive);
+		if (button == NULL)
+			tabfn(m, c, passx, x, w, tgactive);
+		else if (button != NULL) {
+			tabfn(m, c, passx, x, w, button);
+		}
 		i++;
 	}
 }
@@ -867,7 +880,7 @@ buttonpress(XEvent *e)
 		else {
 			if (drawtagmask & DRAWTAGGRID)
 				x += blw + columns * bh / tagrows;
-			bartabcalculate(selmon, x, (int)TEXTW(stext) - lrpad + 2 + getsystraywidth(), ev->x, battabclick);
+			bartabcalculate(selmon, x, (int)TEXTW(stext) - lrpad + 2 + getsystraywidth(), ev->x, ev->button, battabclick);
 		}
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
@@ -1263,7 +1276,7 @@ drawbar(Monitor *m)
 	// Draw bartabgroups
 	drw_rect(drw, x, 0, m->ww - tw - stw - 2 * sp - x, bh, 1, 1);
 	if ((w = m->ww - tw - stw - 2 * sp - x) > bh) {
-		bartabcalculate(m, x, tw+stw, -1, bartabdraw);
+		bartabcalculate(m, x, tw+stw, -1, NULL, bartabdraw);
 		if (BARTAB_BOTTOMBORDER) {
 			drw_setscheme(drw, scheme[SchemeInfoNorm]);
 			drw_rect(drw, 0, bh - 1, m->ww, 1, 1, 0);
