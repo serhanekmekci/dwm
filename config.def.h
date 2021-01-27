@@ -6,7 +6,7 @@ static unsigned int snap					= 20;   /* snap pixel */
 /* bar */
 static int showbar							= 1;	/* 0 means no bar */
 static int topbar							= 1;	/* 0 means bottom bar */
-static const int user_bh					= 23;   /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh					= 28;   /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int vertpad					= 15;   /* vertical padding of bar */
 static const int sidepad					= 20;   /* horizontal padding of bar */
 static int bb								= 5;	/* bar border */
@@ -18,8 +18,7 @@ static const unsigned int gappoh			= 20;   /* horiz outer gap between windows an
 static const unsigned int gappov			= 15;   /* vert outer gap between windows and screen edge */
 static const int smartgaps					= 0;    /* 1 means no outer gap when there is only one window */
 
-/* systray */
-static const unsigned int systraypinning	= 0;	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+/* systray */ static const unsigned int systraypinning	= 0;	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing	= 0;	/* systray spacing */
 static const int systraypinningfailfirst	= 1;	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray				= 1;	/* 0 means no systray */
@@ -127,7 +126,7 @@ static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", 
 #define BARTAB_BORDERS 0       // 0 = off, 1 = on
 #define BARTAB_BOTTOMBORDER 0  // 0 = off, 1 = on
 #define BARTAB_TAGSINDICATOR 1 // 0 = off, 1 = on if >1 client/view tag, 2 = always on
-#define BARTAB_TAGSPX 5        // # pixels for tag grid boxes
+#define BARTAB_TAGSPX 6        // # pixels for tag grid boxes
 #define BARTAB_TAGSROWS 3      // # rows in tag grid (9 tags, e.g. 3x3)
 
 static const unsigned int drawtagmask = DRAWTAGGRID; /* | DRAWCLASSICTAGS to show classic row of tags */
