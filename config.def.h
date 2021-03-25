@@ -18,12 +18,11 @@ static const unsigned int gappoh			= 20;   /* horiz outer gap between windows an
 static const unsigned int gappov			= 15;   /* vert outer gap between windows and screen edge */
 static const int smartgaps					= 0;    /* 1 means no outer gap when there is only one window */
 
-/* systray */ static const unsigned int systraypinning	= 0;	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+/* systray */
+static const unsigned int systraypinning	= 0;	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing	= 0;	/* systray spacing */
 static const int systraypinningfailfirst	= 1;	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray				= 1;	/* 0 means no systray */
-
-static char dmenu_lnm[]						= "10"; /* dmenu line number */
 
 static const int swallowfloating			= 0;    /* 1 means swallow floating windows by default */
 
@@ -171,20 +170,21 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
-#define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
-	{ Mod1Mask|ShiftMask,           KEY,      swaptags,       {.ui = 1 << TAG} },
+
+//#define TAGKEYS(KEY,TAG) \
+	//{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+	//{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	//{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	//{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
+	//{ Mod1Mask|ShiftMask,           KEY,      swaptags,       {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-F", "-m", dmenumon, "-c", "-l", dmenu_lnm, "-b", NULL };
-static const char *termcmd[]  = { "tabbedst", NULL };
+//static char dmenumon[2] = "0"; [> component of dmenucmd, manipulated in spawn() <]
+//static const char *dmenucmd[] = { "dmenu_run", "-F", "-m", dmenumon, "-c", "-l", dmenu_lnm, "-b", NULL };
+//static const char *termcmd[]  = { "tabbedst", NULL };
 
 /*
  * Xresources preferences to load at startup
@@ -228,15 +228,15 @@ ResourcePref resources[] = {
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	//{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	//{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	//{ MODKEY,                       XK_b,      togglebar,      {0} },
+	//{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+	//{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	//{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+	//{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	//{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+	//{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	/* GAP CONTROL */
 	/*
 	 *{ MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } },
@@ -256,14 +256,14 @@ static Key keys[] = {
 	 *{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
 	 *{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
 	 */
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	//{ MODKEY,                       XK_Return, zoom,           {0} },
+	//{ MODKEY,                       XK_Tab,    view,           {0} },
+	//{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	//{ MODKEY,                       XK_x,      setlayout,      {.v = &layouts[0]} },
 	//{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_s,      togglesticky,   {0} },
+	//{ MODKEY,                       XK_space,  setlayout,      {0} },
+	//{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	//{ MODKEY,                       XK_s,      togglesticky,   {0} },
 
 	{ MODKEY|ShiftMask|ControlMask, XK_j,   moveresize,     {.v = "0x 25y 0w 0h" } },
 	{ MODKEY|ShiftMask|ControlMask, XK_k,	moveresize,     {.v = "0x -25y 0w 0h" } },
@@ -284,34 +284,34 @@ static Key keys[] = {
 	//{ MODKEY|ControlMask|ShiftMask, XK_Down,   moveresizeedge, {.v = "B"} },
 	//{ MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
 	//{ MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
-	{ MODKEY,            			XK_u,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-    { MODKEY|ShiftMask,           XK_k,	   switchtag,      { .ui = SWITCHTAG_UP     | SWITCHTAG_VIEW } },
-    { MODKEY|ShiftMask,           XK_j,	   switchtag,      { .ui = SWITCHTAG_DOWN   | SWITCHTAG_VIEW } },
-    { MODKEY|ShiftMask,           XK_l,	   switchtag,      { .ui = SWITCHTAG_RIGHT  | SWITCHTAG_VIEW } },
-    { MODKEY|ShiftMask,           XK_h,	   switchtag,      { .ui = SWITCHTAG_LEFT   | SWITCHTAG_VIEW } },
-    { MODKEY|Mod4Mask|ControlMask,              XK_k,     switchtag,      { .ui = SWITCHTAG_UP     | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-    { MODKEY|Mod4Mask|ControlMask,              XK_j,   switchtag,      { .ui = SWITCHTAG_DOWN   | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-    { MODKEY|Mod4Mask|ControlMask,              XK_l,  switchtag,      { .ui = SWITCHTAG_RIGHT  | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-    { MODKEY|Mod4Mask|ControlMask,              XK_h,   switchtag,      { .ui = SWITCHTAG_LEFT   | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-	{ MODKEY,			XK_z,		shiftview,	{ .i = -1 } },
+	//{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+	//{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+	//{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+	//{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+	//{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+	//{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	//{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
+	//{ MODKEY,            			XK_u,  	   togglescratch,  {.ui = 0 } },
+	//{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 1 } },
+	//TAGKEYS(                        XK_1,                      0)
+	//TAGKEYS(                        XK_2,                      1)
+	//TAGKEYS(                        XK_3,                      2)
+	//TAGKEYS(                        XK_4,                      3)
+	//TAGKEYS(                        XK_5,                      4)
+	//TAGKEYS(                        XK_6,                      5)
+	//TAGKEYS(                        XK_7,                      6)
+	//TAGKEYS(                        XK_8,                      7)
+	//TAGKEYS(                        XK_9,                      8)
+	//{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,				XK_k,	   switchtag,      { .ui = SWITCHTAG_UP     | SWITCHTAG_VIEW } },
+	{ MODKEY|ShiftMask,				XK_j,	   switchtag,      { .ui = SWITCHTAG_DOWN   | SWITCHTAG_VIEW } },
+	{ MODKEY|ShiftMask,				XK_l,	   switchtag,      { .ui = SWITCHTAG_RIGHT  | SWITCHTAG_VIEW } },
+	{ MODKEY|ShiftMask,				XK_h,	   switchtag,      { .ui = SWITCHTAG_LEFT   | SWITCHTAG_VIEW } },
+	{ MODKEY|Mod4Mask|ControlMask,  XK_k,	   switchtag,      { .ui = SWITCHTAG_UP     | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+    { MODKEY|Mod4Mask|ControlMask,  XK_j,	   switchtag,      { .ui = SWITCHTAG_DOWN   | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+    { MODKEY|Mod4Mask|ControlMask,  XK_l,	   switchtag,      { .ui = SWITCHTAG_RIGHT  | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+    { MODKEY|Mod4Mask|ControlMask,  XK_h,	   switchtag,      { .ui = SWITCHTAG_LEFT   | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+	//{ MODKEY,						XK_z,	   shiftview,	   { .i = -1 } },
 
 };
 
@@ -370,4 +370,11 @@ static Signal signals[] = {
 	{ "setlayout",      setlayout },
 	{ "setlayoutex",    setlayoutex },
 	{ "reload",	        livereloadxres },
+	{ "togglefullscr",  togglefullscr},
+	{ "swaptags",       swaptags},
+	{ "togglesticky",   togglesticky},
+	{ "togglescratch",  togglescratch},
+	{ "switchtag",		switchtag},
+	{ "shiftview",      shiftview},
+	{ "moveresize",		moveresize},
 };
