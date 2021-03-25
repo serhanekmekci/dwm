@@ -92,7 +92,7 @@
 #define MWM_DECOR_BORDER            (1 << 1)
 #define MWM_DECOR_TITLE             (1 << 3)
 
-/* enums */
+
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
 enum { SchemeNorm, SchemeSel, SchemeStatus, SchemeTagsSel, SchemeTagsNorm, SchemeInfoSel, SchemeInfoNorm, SchemeTagGrid}; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
@@ -538,9 +538,15 @@ bartabdraw(Monitor *m, Client *c, int unused, int x, int w, int groupactive) {
 	if (!c) return;
 	int i, nclienttags = 0, nviewtags = 0;
 
+	Client *client;
+	for (i = 0, client = m->clients; client; client = client->next) {
+		if (!ISVISIBLE(client)) continue;
+		i++;
+	}
+
 	drw_setscheme(drw, scheme[
-		m->sel == c ? SchemeSel : (groupactive ? SchemeInfoNorm: SchemeInfoSel)
-	]);
+		i > 1 ? (m->sel == c ? SchemeInfoSel : SchemeInfoNorm) : SchemeNorm]);
+
 	drw_text(drw, x, 0, w, bh, lrpad / 2, c->name, 0);
 
 	// Floating win indicator
