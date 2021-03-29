@@ -27,7 +27,7 @@ static const int showsystray				= 1;	/* 0 means no systray */
 /* window swallowing */
 static const int swaldecay					= 3;
 static const int swalretroactive			= 1;
-static const char swalsymbol[]				= "S";
+static const char swalsymbol[]				= "";
 
 
 static char *fonts[]						= {
@@ -269,15 +269,15 @@ static Key keys[] = {
 	//{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	//{ MODKEY,                       XK_s,      togglesticky,   {0} },
 
-	{ MODKEY|ShiftMask|ControlMask, XK_j,   moveresize,     {.v = "0x 25y 0w 0h" } },
-	{ MODKEY|ShiftMask|ControlMask, XK_k,	moveresize,     {.v = "0x -25y 0w 0h" } },
-	{ MODKEY|ShiftMask|ControlMask, XK_l,	moveresize,     {.v = "25x 0y 0w 0h" } },
-	{ MODKEY|ShiftMask|ControlMask, XK_h,	moveresize,     {.v = "-25x 0y 0w 0h" } },
+	//{ MODKEY|ShiftMask|ControlMask, XK_j,   moveresize,     {.v = "0x 25y 0w 0h" } },
+	//{ MODKEY|ShiftMask|ControlMask, XK_k,	moveresize,     {.v = "0x -25y 0w 0h" } },
+	//{ MODKEY|ShiftMask|ControlMask, XK_l,	moveresize,     {.v = "25x 0y 0w 0h" } },
+	//{ MODKEY|ShiftMask|ControlMask, XK_h,	moveresize,     {.v = "-25x 0y 0w 0h" } },
 
-	{ MODKEY|Mod1Mask,				XK_j,	moveresize,     {.v = "0x 0y 0w 25h" } },
-	{ MODKEY|Mod1Mask,				XK_k,	moveresize,     {.v = "0x 0y 0w -25h" } },
-	{ MODKEY|Mod1Mask,				XK_l,	moveresize,     {.v = "0x 0y 25w 0h" } },
-	{ MODKEY|Mod1Mask,				XK_h,	moveresize,     {.v = "0x 0y -25w 0h" } },
+	//{ MODKEY|Mod1Mask,				XK_j,	moveresize,     {.v = "0x 0y 0w 25h" } },
+	//{ MODKEY|Mod1Mask,				XK_k,	moveresize,     {.v = "0x 0y 0w -25h" } },
+	//{ MODKEY|Mod1Mask,				XK_l,	moveresize,     {.v = "0x 0y 25w 0h" } },
+	//{ MODKEY|Mod1Mask,				XK_h,	moveresize,     {.v = "0x 0y -25w 0h" } },
 
 	//{ MODKEY|ControlMask,           XK_Up,     moveresizeedge, {.v = "t"} },
 	//{ MODKEY|ControlMask,           XK_Down,   moveresizeedge, {.v = "b"} },
