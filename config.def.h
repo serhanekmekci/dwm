@@ -136,6 +136,9 @@ static const unsigned int drawtagmask = DRAWTAGGRID; /* | DRAWCLASSICTAGS to sho
 static const int tagrows = 3;
 
 
+static Key keys[0];
+
+#define MODKEY Mod4Mask
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -171,24 +174,6 @@ static const Layout layouts[] = {
 	{ "|M|",		centeredmaster },
 	{ "D",			deck },
 };
-
-/* key definitions */
-#define MODKEY Mod4Mask
-
-//#define TAGKEYS(KEY,TAG) \
-	//{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	//{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	//{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	//{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
-	//{ Mod1Mask|ShiftMask,           KEY,      swaptags,       {.ui = 1 << TAG} },
-
-/* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
-/* commands */
-//static char dmenumon[2] = "0"; [> component of dmenucmd, manipulated in spawn() <]
-//static const char *dmenucmd[] = { "dmenu_run", "-F", "-m", dmenumon, "-c", "-l", dmenu_lnm, "-b", NULL };
-//static const char *termcmd[]  = { "tabbedst", NULL };
 
 /*
  * Xresources preferences to load at startup
@@ -228,104 +213,12 @@ ResourcePref resources[] = {
 		{ "barborder",			INTEGER, &bb },
 };
 
-#include "shiftview.c"
-
-static Key keys[] = {
-	/* modifier                     key        function        argument */
-	//{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	//{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	//{ MODKEY,                       XK_b,      togglebar,      {0} },
-	//{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	//{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	//{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	//{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	//{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	//{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	/* GAP CONTROL */
-	/*
-	 *{ MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } },
-	 *{ MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } },
-	 *{ MODKEY|Mod4Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } },
-	 *{ MODKEY|Mod4Mask|ShiftMask,    XK_l,      incrogaps,      {.i = -1 } },
-	 *{ MODKEY|Mod4Mask|ControlMask,  XK_h,      incrigaps,      {.i = +1 } },
-	 *{ MODKEY|Mod4Mask|ControlMask,  XK_l,      incrigaps,      {.i = -1 } },
-	 *{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
-	 *{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
-	 *{ MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
-	 *{ MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } },
-	 *{ MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } },
-	 *{ MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } },
-	 *{ MODKEY|Mod4Mask,              XK_y,      incrohgaps,     {.i = +1 } },
-	 *{ MODKEY|Mod4Mask,              XK_o,      incrohgaps,     {.i = -1 } },
-	 *{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
-	 *{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
-	 */
-	//{ MODKEY,                       XK_Return, zoom,           {0} },
-	//{ MODKEY,                       XK_Tab,    view,           {0} },
-	//{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	//{ MODKEY,                       XK_x,      setlayout,      {.v = &layouts[0]} },
-	//{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	//{ MODKEY,                       XK_space,  setlayout,      {0} },
-	//{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	//{ MODKEY,                       XK_s,      togglesticky,   {0} },
-
-	//{ MODKEY|ShiftMask|ControlMask, XK_j,   moveresize,     {.v = "0x 25y 0w 0h" } },
-	//{ MODKEY|ShiftMask|ControlMask, XK_k,	moveresize,     {.v = "0x -25y 0w 0h" } },
-	//{ MODKEY|ShiftMask|ControlMask, XK_l,	moveresize,     {.v = "25x 0y 0w 0h" } },
-	//{ MODKEY|ShiftMask|ControlMask, XK_h,	moveresize,     {.v = "-25x 0y 0w 0h" } },
-
-	//{ MODKEY|Mod1Mask,				XK_j,	moveresize,     {.v = "0x 0y 0w 25h" } },
-	//{ MODKEY|Mod1Mask,				XK_k,	moveresize,     {.v = "0x 0y 0w -25h" } },
-	//{ MODKEY|Mod1Mask,				XK_l,	moveresize,     {.v = "0x 0y 25w 0h" } },
-	//{ MODKEY|Mod1Mask,				XK_h,	moveresize,     {.v = "0x 0y -25w 0h" } },
-
-	//{ MODKEY|ControlMask,           XK_Up,     moveresizeedge, {.v = "t"} },
-	//{ MODKEY|ControlMask,           XK_Down,   moveresizeedge, {.v = "b"} },
-	//{ MODKEY|ControlMask,           XK_Left,   moveresizeedge, {.v = "l"} },
-	//{ MODKEY|ControlMask,           XK_Right,  moveresizeedge, {.v = "r"} },
-
-	//{ MODKEY|ControlMask|ShiftMask, XK_Up,     moveresizeedge, {.v = "T"} },
-	//{ MODKEY|ControlMask|ShiftMask, XK_Down,   moveresizeedge, {.v = "B"} },
-	//{ MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
-	//{ MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
-	//{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	//{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	//{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	//{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	//{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	//{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	//{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
-	//{ MODKEY,            			XK_u,  	   togglescratch,  {.ui = 0 } },
-	//{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 1 } },
-	//TAGKEYS(                        XK_1,                      0)
-	//TAGKEYS(                        XK_2,                      1)
-	//TAGKEYS(                        XK_3,                      2)
-	//TAGKEYS(                        XK_4,                      3)
-	//TAGKEYS(                        XK_5,                      4)
-	//TAGKEYS(                        XK_6,                      5)
-	//TAGKEYS(                        XK_7,                      6)
-	//TAGKEYS(                        XK_8,                      7)
-	//TAGKEYS(                        XK_9,                      8)
-	//{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ShiftMask,				XK_k,	   switchtag,      { .ui = SWITCHTAG_UP     | SWITCHTAG_VIEW } },
-	{ MODKEY|ShiftMask,				XK_j,	   switchtag,      { .ui = SWITCHTAG_DOWN   | SWITCHTAG_VIEW } },
-	{ MODKEY|ShiftMask,				XK_l,	   switchtag,      { .ui = SWITCHTAG_RIGHT  | SWITCHTAG_VIEW } },
-	{ MODKEY|ShiftMask,				XK_h,	   switchtag,      { .ui = SWITCHTAG_LEFT   | SWITCHTAG_VIEW } },
-	{ MODKEY|Mod4Mask|ControlMask,  XK_k,	   switchtag,      { .ui = SWITCHTAG_UP     | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-    { MODKEY|Mod4Mask|ControlMask,  XK_j,	   switchtag,      { .ui = SWITCHTAG_DOWN   | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-    { MODKEY|Mod4Mask|ControlMask,  XK_l,	   switchtag,      { .ui = SWITCHTAG_RIGHT  | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-    { MODKEY|Mod4Mask|ControlMask,  XK_h,	   switchtag,      { .ui = SWITCHTAG_LEFT   | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-	//{ MODKEY,						XK_z,	   shiftview,	   { .i = -1 } },
-
-};
-
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayoutmenu,  {0} },
-	//{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[1]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
@@ -343,8 +236,8 @@ static Button buttons[] = {
 };
 
 /* dwmc */
-
 #include "dwmc.c"
+#include "shiftview.c"
 
 /* signal definitions */
 /* signum must be greater than 0 */
