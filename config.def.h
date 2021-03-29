@@ -24,7 +24,11 @@ static const unsigned int systrayspacing	= 0;	/* systray spacing */
 static const int systraypinningfailfirst	= 1;	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray				= 1;	/* 0 means no systray */
 
-static const int swallowfloating			= 0;    /* 1 means swallow floating windows by default */
+/* window swallowing */
+static const int swaldecay					= 3;
+static const int swalretroactive			= 1;
+static const char swalsymbol[]				= "S";
+
 
 static char *fonts[]						= {
 											"Font Awesome 5 Free Solid:size=13:antialias=true:autohint=true",
@@ -137,14 +141,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class		instance		title				tags mask	isfloating	noswallow   isterminal  iscentered monitor */
-	{ "St",			NULL,			NULL,				0,			0,			0,			1,			1,			-1 },
-	{ "tabbed",		NULL,			NULL,				0,			0,			0,			1,			1,			-1 },
-	{ NULL,			NULL,			"Event Tester",		0,			1,			1,			0,			1,			-1 }, /* xev */
-	{ NULL,			"sp1",			NULL,				SPTAG(0),	1,			0,			-1,			1,			-1 },
-	{ NULL,			"sp2",			NULL,				SPTAG(1),	1,			0,			-1,			1,			-1 },
-	{ NULL,			"translate",	NULL,				0,			1,			1,			-1,			1,			-1 },
-	{ "Steam",		"Steam",		NULL,				0,			0,			1,			0,			0,			-1 },
+	/* class		instance		title				tags mask	isfloating	iscentered monitor */
+	{ "St",			NULL,			NULL,				0,			0,			1,			-1 },
+	{ "tabbed",		NULL,			NULL,				0,			0,			1,			-1 },
+	{ NULL,			NULL,			"Event Tester",		0,			1,			1,			-1 }, /* xev */
+	{ NULL,			"sp1",			NULL,				SPTAG(0),	1,			1,			-1 },
+	{ NULL,			"sp2",			NULL,				SPTAG(1),	1,			1,			-1 },
+	{ NULL,			"translate",	NULL,				0,			1,			1,			-1 },
+	{ "Steam",		"Steam",		NULL,				0,			0,			0,			-1 },
 };
 
 /* layout(s) */
@@ -377,4 +381,6 @@ static Signal signals[] = {
 	{ "switchtag",		switchtag},
 	{ "shiftview",      shiftview},
 	{ "moveresize",		moveresize},
+	{ "swalstopsel",	swalstopsel},
+	{ "swalmouse",		swalmouse},
 };
